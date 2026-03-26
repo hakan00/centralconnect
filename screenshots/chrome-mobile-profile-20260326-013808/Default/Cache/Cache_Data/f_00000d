@@ -1,0 +1,472 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/ApplicationsPage.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c1449b3d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=c1449b3d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useState = __vite__cjsImport3_react["useState"];
+import api from "/src/api/api.js";
+import EmptyState from "/src/components/EmptyState.jsx";
+import LoadingState from "/src/components/LoadingState.jsx";
+import PageHeader from "/src/components/PageHeader.jsx";
+import StatusBadge from "/src/components/StatusBadge.jsx";
+import { useAuth } from "/src/context/AuthContext.jsx";
+import { getApiMessage } from "/src/utils/http.js";
+import { formatDate, formatDateTime } from "/src/utils/formatters.js";
+const emptyForm = {
+  universityName: "",
+  programName: "",
+  intakeTerm: "",
+  status: "draft",
+  notes: ""
+};
+const applicationStatuses = ["draft", "submitted", "under-review", "accepted", "rejected"];
+export default function ApplicationsPage() {
+  _s();
+  const { user } = useAuth();
+  const [applications, setApplications] = useState([]);
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const isAdmin = user?.role === "admin";
+  const fetchApplications = async () => {
+    try {
+      const { data } = await api.get("/applications");
+      setApplications(data);
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Applications could not be loaded."));
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+  const resetForm = () => {
+    setForm(emptyForm);
+    setEditingId("");
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError("");
+    try {
+      if (editingId) {
+        await api.put(`/applications/${editingId}`, form);
+      } else {
+        await api.post("/applications", form);
+      }
+      resetForm();
+      await fetchApplications();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Application could not be saved."));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  const onEdit = (item) => {
+    setEditingId(item._id);
+    setForm({
+      universityName: item.universityName,
+      programName: item.programName,
+      intakeTerm: item.intakeTerm,
+      status: item.status,
+      notes: item.notes || ""
+    });
+  };
+  const onDelete = async (id) => {
+    if (!window.confirm("Delete this application record?")) {
+      return;
+    }
+    try {
+      await api.delete(`/applications/${id}`);
+      if (editingId === id) {
+        resetForm();
+      }
+      await fetchApplications();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Application could not be deleted."));
+    }
+  };
+  return /* @__PURE__ */ jsxDEV("section", { className: "page-shell", children: [
+    /* @__PURE__ */ jsxDEV(
+      PageHeader,
+      {
+        eyebrow: "Applications",
+        title: "University applications",
+        description: "Keep your university applications, status updates, and notes together.",
+        actions: editingId ? /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: resetForm, children: "Cancel editing" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 127,
+          columnNumber: 9
+        }, this) : null
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+        lineNumber: 121,
+        columnNumber: 7
+      },
+      this
+    ),
+    error ? /* @__PURE__ */ jsxDEV("p", { className: "error-text", children: error }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+      lineNumber: 134,
+      columnNumber: 16
+    }, this) : null,
+    /* @__PURE__ */ jsxDEV("div", { className: "workspace-grid", children: [
+      /* @__PURE__ */ jsxDEV("form", { onSubmit, className: "panel form-grid sticky-panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Application Form" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 140,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: editingId ? "Update application record" : "Add application record" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 141,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 139,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 138,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "University" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 146,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "University name",
+              value: form.universityName,
+              onChange: (e) => setForm({ ...form, universityName: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 147,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 145,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Program" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 154,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Program name",
+              value: form.programName,
+              onChange: (e) => setForm({ ...form, programName: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 155,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 153,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Intake term" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 162,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Fall 2026",
+              value: form.intakeTerm,
+              onChange: (e) => setForm({ ...form, intakeTerm: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 163,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 161,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Status" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 170,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("select", { value: form.status, onChange: (e) => setForm({ ...form, status: e.target.value }), children: applicationStatuses.map(
+            (status) => /* @__PURE__ */ jsxDEV("option", { value: status, children: status }, status, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 173,
+              columnNumber: 15
+            }, this)
+          ) }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 171,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 169,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Notes" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 180,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "textarea",
+            {
+              placeholder: "Deadlines, missing documents, interview notes, or scholarship context",
+              value: form.notes,
+              onChange: (e) => setForm({ ...form, notes: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 181,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 179,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "button-row", children: [
+          /* @__PURE__ */ jsxDEV("button", { className: "primary-btn", disabled: submitting, children: submitting ? "Saving..." : editingId ? "Update Application" : "Add Application" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 189,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: resetForm, children: "Reset" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 192,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 188,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+        lineNumber: 137,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Application Records" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 201,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: isAdmin ? "All application records" : "My applications" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 202,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 200,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 199,
+          columnNumber: 11
+        }, this),
+        loading ? /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading applications..." }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 207,
+          columnNumber: 11
+        }, this) : applications.length ? /* @__PURE__ */ jsxDEV("div", { className: "list", children: applications.map(
+          (item) => /* @__PURE__ */ jsxDEV("article", { className: "resource-card", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-topline", children: [
+              /* @__PURE__ */ jsxDEV("div", { children: [
+                /* @__PURE__ */ jsxDEV("strong", { children: item.universityName }, void 0, false, {
+                  fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                  lineNumber: 214,
+                  columnNumber: 23
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { children: item.programName }, void 0, false, {
+                  fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                  lineNumber: 215,
+                  columnNumber: 23
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 213,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV(StatusBadge, { status: item.status }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 217,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 212,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-meta", children: [
+              /* @__PURE__ */ jsxDEV("span", { children: item.intakeTerm }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 221,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { children: [
+                "Updated ",
+                formatDateTime(item.updatedAt)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 222,
+                columnNumber: 21
+              }, this),
+              isAdmin && item.user ? /* @__PURE__ */ jsxDEV("span", { children: item.user.fullName }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 223,
+                columnNumber: 45
+              }, this) : null
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 220,
+              columnNumber: 19
+            }, this),
+            item.notes ? /* @__PURE__ */ jsxDEV("p", { className: "resource-body", children: item.notes }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 226,
+              columnNumber: 33
+            }, this) : null,
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-actions", children: [
+              /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: () => onEdit(item), children: "Edit" }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 229,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn danger-btn", onClick: () => onDelete(item._id), children: "Delete" }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+                lineNumber: 232,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 228,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("small", { className: "resource-footnote", children: [
+              "Created ",
+              formatDate(item.createdAt)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+              lineNumber: 237,
+              columnNumber: 19
+            }, this)
+          ] }, item._id, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 211,
+            columnNumber: 13
+          }, this)
+        ) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+          lineNumber: 209,
+          columnNumber: 11
+        }, this) : /* @__PURE__ */ jsxDEV(
+          EmptyState,
+          {
+            title: "No application records yet",
+            description: "Your applications will appear here after you add one."
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+            lineNumber: 242,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+        lineNumber: 198,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+      lineNumber: 136,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx",
+    lineNumber: 120,
+    columnNumber: 5
+  }, this);
+}
+_s(ApplicationsPage, "DkSYzLg1sOzp+jrtk6jgz8LlgPg=", false, function() {
+  return [useAuth];
+});
+_c = ApplicationsPage;
+var _c;
+$RefreshReg$(_c, "ApplicationsPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ApplicationsPage.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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O0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFpREE7QUFBQSxTQS9HRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBZ0hBO0FBQUEsT0FoSUY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQWlJQTtBQUVKO0FBQUM1QixHQW5OdUJELGtCQUFnQjtBQUFBLFVBQ3JCWCxPQUFPO0FBQUE7QUFBQSxLQURGVztBQUFnQixJQUFBMEM7QUFBQSxhQUFBQSxJQUFBIiwibmFtZXMiOlsidXNlRWZmZWN0IiwidXNlU3RhdGUiLCJhcGkiLCJFbXB0eVN0YXRlIiwiTG9hZGluZ1N0YXRlIiwiUGFnZUhlYWRlciIsIlN0YXR1c0JhZGdlIiwidXNlQXV0aCIsImdldEFwaU1lc3NhZ2UiLCJmb3JtYXREYXRlIiwiZm9ybWF0RGF0ZVRpbWUiLCJlbXB0eUZvcm0iLCJ1bml2ZXJzaXR5TmFtZSIsInByb2dyYW1OYW1lIiwiaW50YWtlVGVybSIsInN0YXR1cyIsIm5vdGVzIiwiYXBwbGljYXRpb25TdGF0dXNlcyIsIkFwcGxpY2F0aW9uc1BhZ2UiLCJfcyIsInVzZXIiLCJhcHBsaWNhdGlvbnMiLCJzZXRBcHBsaWNhdGlvbnMiLCJmb3JtIiwic2V0Rm9ybSIsImVkaXRpbmdJZCIsInNldEVkaXRpbmdJZCIsImxvYWRpbmciLCJzZXRMb2FkaW5nIiwic3VibWl0dGluZyIsInNldFN1Ym1pdHRpbmciLCJlcnJvciIsInNldEVycm9yIiwiaXNBZG1pbiIsInJvbGUiLCJmZXRjaEFwcGxpY2F0aW9ucyIsImRhdGEiLCJnZXQiLCJyZXF1ZXN0RXJyb3IiLCJyZXNldEZvcm0iLCJvblN1Ym1pdCIsImUiLCJwcmV2ZW50RGVmYXVsdCIsInB1dCIsInBvc3QiLCJvbkVkaXQiLCJpdGVtIiwiX2lkIiwib25EZWxldGUiLCJpZCIsIndpbmRvdyIsImNvbmZpcm0iLCJkZWxldGUiLCJ0YXJnZXQiLCJ2YWx1ZSIsIm1hcCIsImxlbmd0aCIsInVwZGF0ZWRBdCIsImZ1bGxOYW1lIiwiY3JlYXRlZEF0IiwiX2MiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiQXBwbGljYXRpb25zUGFnZS5qc3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlRWZmZWN0LCB1c2VTdGF0ZSB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBhcGkgZnJvbSAnLi4vYXBpL2FwaS5qcyc7XG5pbXBvcnQgRW1wdHlTdGF0ZSBmcm9tICcuLi9jb21wb25lbnRzL0VtcHR5U3RhdGUuanN4JztcbmltcG9ydCBMb2FkaW5nU3RhdGUgZnJvbSAnLi4vY29tcG9uZW50cy9Mb2FkaW5nU3RhdGUuanN4JztcbmltcG9ydCBQYWdlSGVhZGVyIGZyb20gJy4uL2NvbXBvbmVudHMvUGFnZUhlYWRlci5qc3gnO1xuaW1wb3J0IFN0YXR1c0JhZGdlIGZyb20gJy4uL2NvbXBvbmVudHMvU3RhdHVzQmFkZ2UuanN4JztcbmltcG9ydCB7IHVzZUF1dGggfSBmcm9tICcuLi9jb250ZXh0L0F1dGhDb250ZXh0LmpzeCc7XG5pbXBvcnQgeyBnZXRBcGlNZXNzYWdlIH0gZnJvbSAnLi4vdXRpbHMvaHR0cC5qcyc7XG5pbXBvcnQgeyBmb3JtYXREYXRlLCBmb3JtYXREYXRlVGltZSB9IGZyb20gJy4uL3V0aWxzL2Zvcm1hdHRlcnMuanMnO1xuXG5jb25zdCBlbXB0eUZvcm0gPSB7XG4gIHVuaXZlcnNpdHlOYW1lOiAnJyxcbiAgcHJvZ3JhbU5hbWU6ICcnLFxuICBpbnRha2VUZXJtOiAnJyxcbiAgc3RhdHVzOiAnZHJhZnQnLFxuICBub3RlczogJydcbn07XG5cbmNvbnN0IGFwcGxpY2F0aW9uU3RhdHVzZXMgPSBbJ2RyYWZ0JywgJ3N1Ym1pdHRlZCcsICd1bmRlci1yZXZpZXcnLCAnYWNjZXB0ZWQnLCAncmVqZWN0ZWQnXTtcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQXBwbGljYXRpb25zUGFnZSgpIHtcbiAgY29uc3QgeyB1c2VyIH0gPSB1c2VBdXRoKCk7XG4gIGNvbnN0IFthcHBsaWNhdGlvbnMsIHNldEFwcGxpY2F0aW9uc10gPSB1c2VTdGF0ZShbXSk7XG4gIGNvbnN0IFtmb3JtLCBzZXRGb3JtXSA9IHVzZVN0YXRlKGVtcHR5Rm9ybSk7XG4gIGNvbnN0IFtlZGl0aW5nSWQsIHNldEVkaXRpbmdJZF0gPSB1c2VTdGF0ZSgnJyk7XG4gIGNvbnN0IFtsb2FkaW5nLCBzZXRMb2FkaW5nXSA9IHVzZVN0YXRlKHRydWUpO1xuICBjb25zdCBbc3VibWl0dGluZywgc2V0U3VibWl0dGluZ10gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IFtlcnJvciwgc2V0RXJyb3JdID0gdXNlU3RhdGUoJycpO1xuXG4gIGNvbnN0IGlzQWRtaW4gPSB1c2VyPy5yb2xlID09PSAnYWRtaW4nO1xuXG4gIGNvbnN0IGZldGNoQXBwbGljYXRpb25zID0gYXN5bmMgKCkgPT4ge1xuICAgIHRyeSB7XG4gICAgICBjb25zdCB7IGRhdGEgfSA9IGF3YWl0IGFwaS5nZXQoJy9hcHBsaWNhdGlvbnMnKTtcbiAgICAgIHNldEFwcGxpY2F0aW9ucyhkYXRhKTtcbiAgICB9IGNhdGNoIChyZXF1ZXN0RXJyb3IpIHtcbiAgICAgIHNldEVycm9yKGdldEFwaU1lc3NhZ2UocmVxdWVzdEVycm9yLCAnQXBwbGljYXRpb25zIGNvdWxkIG5vdCBiZSBsb2FkZWQuJykpO1xuICAgIH0gZmluYWxseSB7XG4gICAgICBzZXRMb2FkaW5nKGZhbHNlKTtcbiAgICB9XG4gIH07XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBmZXRjaEFwcGxpY2F0aW9ucygpO1xuICB9LCBbXSk7XG5cbiAgY29uc3QgcmVzZXRGb3JtID0gKCkgPT4ge1xuICAgIHNldEZvcm0oZW1wdHlGb3JtKTtcbiAgICBzZXRFZGl0aW5nSWQoJycpO1xuICB9O1xuXG4gIGNvbnN0IG9uU3VibWl0ID0gYXN5bmMgKGUpID0+IHtcbiAgICBlLnByZXZlbnREZWZhdWx0KCk7XG4gICAgc2V0U3VibWl0dGluZyh0cnVlKTtcbiAgICBzZXRFcnJvcignJyk7XG5cbiAgICB0cnkge1xuICAgICAgaWYgKGVkaXRpbmdJZCkge1xuICAgICAgICBhd2FpdCBhcGkucHV0KGAvYXBwbGljYXRpb25zLyR7ZWRpdGluZ0lkfWAsIGZvcm0pO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgYXdhaXQgYXBpLnBvc3QoJy9hcHBsaWNhdGlvbnMnLCBmb3JtKTtcbiAgICAgIH1cblxuICAgICAgcmVzZXRGb3JtKCk7XG4gICAgICBhd2FpdCBmZXRjaEFwcGxpY2F0aW9ucygpO1xuICAgIH0gY2F0Y2ggKHJlcXVlc3RFcnJvcikge1xuICAgICAgc2V0RXJyb3IoZ2V0QXBpTWVzc2FnZShyZXF1ZXN0RXJyb3IsICdBcHBsaWNhdGlvbiBjb3VsZCBub3QgYmUgc2F2ZWQuJykpO1xuICAgIH0gZmluYWxseSB7XG4gICAgICBzZXRTdWJtaXR0aW5nKGZhbHNlKTtcbiAgICB9XG4gIH07XG5cbiAgY29uc3Qgb25FZGl0ID0gKGl0ZW0pID0+IHtcbiAgICBzZXRFZGl0aW5nSWQoaXRlbS5faWQpO1xuICAgIHNldEZvcm0oe1xuICAgICAgdW5pdmVyc2l0eU5hbWU6IGl0ZW0udW5pdmVyc2l0eU5hbWUsXG4gICAgICBwcm9ncmFtTmFtZTogaXRlbS5wcm9ncmFtTmFtZSxcbiAgICAgIGludGFrZVRlcm06IGl0ZW0uaW50YWtlVGVybSxcbiAgICAgIHN0YXR1czogaXRlbS5zdGF0dXMsXG4gICAgICBub3RlczogaXRlbS5ub3RlcyB8fCAnJ1xuICAgIH0pO1xuICB9O1xuXG4gIGNvbnN0IG9uRGVsZXRlID0gYXN5bmMgKGlkKSA9PiB7XG4gICAgaWYgKCF3aW5kb3cuY29uZmlybSgnRGVsZXRlIHRoaXMgYXBwbGljYXRpb24gcmVjb3JkPycpKSB7XG4gICAgICByZXR1cm47XG4gICAgfVxuXG4gICAgdHJ5IHtcbiAgICAgIGF3YWl0IGFwaS5kZWxldGUoYC9hcHBsaWNhdGlvbnMvJHtpZH1gKTtcbiAgICAgIGlmIChlZGl0aW5nSWQgPT09IGlkKSB7XG4gICAgICAgIHJlc2V0Rm9ybSgpO1xuICAgICAgfVxuICAgICAgYXdhaXQgZmV0Y2hBcHBsaWNhdGlvbnMoKTtcbiAgICB9IGNhdGNoIChyZXF1ZXN0RXJyb3IpIHtcbiAgICAgIHNldEVycm9yKGdldEFwaU1lc3NhZ2UocmVxdWVzdEVycm9yLCAnQXBwbGljYXRpb24gY291bGQgbm90IGJlIGRlbGV0ZWQuJykpO1xuICAgIH1cbiAgfTtcblxuICByZXR1cm4gKFxuICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cInBhZ2Utc2hlbGxcIj5cbiAgICAgIDxQYWdlSGVhZGVyXG4gICAgICAgIGV5ZWJyb3c9XCJBcHBsaWNhdGlvbnNcIlxuICAgICAgICB0aXRsZT1cIlVuaXZlcnNpdHkgYXBwbGljYXRpb25zXCJcbiAgICAgICAgZGVzY3JpcHRpb249XCJLZWVwIHlvdXIgdW5pdmVyc2l0eSBhcHBsaWNhdGlvbnMsIHN0YXR1cyB1cGRhdGVzLCBhbmQgbm90ZXMgdG9nZXRoZXIuXCJcbiAgICAgICAgYWN0aW9ucz17XG4gICAgICAgICAgZWRpdGluZ0lkID8gKFxuICAgICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuXCIgb25DbGljaz17cmVzZXRGb3JtfT5cbiAgICAgICAgICAgICAgQ2FuY2VsIGVkaXRpbmdcbiAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgICkgOiBudWxsXG4gICAgICAgIH1cbiAgICAgIC8+XG5cbiAgICAgIHtlcnJvciA/IDxwIGNsYXNzTmFtZT1cImVycm9yLXRleHRcIj57ZXJyb3J9PC9wPiA6IG51bGx9XG5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwid29ya3NwYWNlLWdyaWRcIj5cbiAgICAgICAgPGZvcm0gb25TdWJtaXQ9e29uU3VibWl0fSBjbGFzc05hbWU9XCJwYW5lbCBmb3JtLWdyaWQgc3RpY2t5LXBhbmVsIHJldmVhbFwiPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicGFuZWwtaGVhZGluZ1wiPlxuICAgICAgICAgICAgPGRpdj5cbiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwic2VjdGlvbi1raWNrZXJcIj5BcHBsaWNhdGlvbiBGb3JtPC9zcGFuPlxuICAgICAgICAgICAgICA8aDM+e2VkaXRpbmdJZCA/ICdVcGRhdGUgYXBwbGljYXRpb24gcmVjb3JkJyA6ICdBZGQgYXBwbGljYXRpb24gcmVjb3JkJ308L2gzPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgIDxzcGFuPlVuaXZlcnNpdHk8L3NwYW4+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJVbml2ZXJzaXR5IG5hbWVcIlxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS51bml2ZXJzaXR5TmFtZX1cbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgdW5pdmVyc2l0eU5hbWU6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgPHNwYW4+UHJvZ3JhbTwvc3Bhbj5cbiAgICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIlByb2dyYW0gbmFtZVwiXG4gICAgICAgICAgICAgIHZhbHVlPXtmb3JtLnByb2dyYW1OYW1lfVxuICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm0oeyAuLi5mb3JtLCBwcm9ncmFtTmFtZTogZS50YXJnZXQudmFsdWUgfSl9XG4gICAgICAgICAgICAvPlxuICAgICAgICAgIDwvbGFiZWw+XG4gICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImZpZWxkXCI+XG4gICAgICAgICAgICA8c3Bhbj5JbnRha2UgdGVybTwvc3Bhbj5cbiAgICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIkZhbGwgMjAyNlwiXG4gICAgICAgICAgICAgIHZhbHVlPXtmb3JtLmludGFrZVRlcm19XG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIGludGFrZVRlcm06IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgPHNwYW4+U3RhdHVzPC9zcGFuPlxuICAgICAgICAgICAgPHNlbGVjdCB2YWx1ZT17Zm9ybS5zdGF0dXN9IG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIHN0YXR1czogZS50YXJnZXQudmFsdWUgfSl9PlxuICAgICAgICAgICAgICB7YXBwbGljYXRpb25TdGF0dXNlcy5tYXAoKHN0YXR1cykgPT4gKFxuICAgICAgICAgICAgICAgIDxvcHRpb24ga2V5PXtzdGF0dXN9IHZhbHVlPXtzdGF0dXN9PlxuICAgICAgICAgICAgICAgICAge3N0YXR1c31cbiAgICAgICAgICAgICAgICA8L29wdGlvbj5cbiAgICAgICAgICAgICAgKSl9XG4gICAgICAgICAgICA8L3NlbGVjdD5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgPHNwYW4+Tm90ZXM8L3NwYW4+XG4gICAgICAgICAgICA8dGV4dGFyZWFcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJEZWFkbGluZXMsIG1pc3NpbmcgZG9jdW1lbnRzLCBpbnRlcnZpZXcgbm90ZXMsIG9yIHNjaG9sYXJzaGlwIGNvbnRleHRcIlxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5ub3Rlc31cbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgbm90ZXM6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJidXR0b24tcm93XCI+XG4gICAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cInByaW1hcnktYnRuXCIgZGlzYWJsZWQ9e3N1Ym1pdHRpbmd9PlxuICAgICAgICAgICAgICB7c3VibWl0dGluZyA/ICdTYXZpbmcuLi4nIDogZWRpdGluZ0lkID8gJ1VwZGF0ZSBBcHBsaWNhdGlvbicgOiAnQWRkIEFwcGxpY2F0aW9uJ31cbiAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuXCIgb25DbGljaz17cmVzZXRGb3JtfT5cbiAgICAgICAgICAgICAgUmVzZXRcbiAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Zvcm0+XG5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwYW5lbCByZXZlYWxcIj5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInBhbmVsLWhlYWRpbmdcIj5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInNlY3Rpb24ta2lja2VyXCI+QXBwbGljYXRpb24gUmVjb3Jkczwvc3Bhbj5cbiAgICAgICAgICAgICAgPGgzPntpc0FkbWluID8gJ0FsbCBhcHBsaWNhdGlvbiByZWNvcmRzJyA6ICdNeSBhcHBsaWNhdGlvbnMnfTwvaDM+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgIHtsb2FkaW5nID8gKFxuICAgICAgICAgICAgPExvYWRpbmdTdGF0ZSBsYWJlbD1cIkxvYWRpbmcgYXBwbGljYXRpb25zLi4uXCIgLz5cbiAgICAgICAgICApIDogYXBwbGljYXRpb25zLmxlbmd0aCA/IChcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibGlzdFwiPlxuICAgICAgICAgICAgICB7YXBwbGljYXRpb25zLm1hcCgoaXRlbSkgPT4gKFxuICAgICAgICAgICAgICAgIDxhcnRpY2xlIGtleT17aXRlbS5faWR9IGNsYXNzTmFtZT1cInJlc291cmNlLWNhcmRcIj5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVzb3VyY2UtdG9wbGluZVwiPlxuICAgICAgICAgICAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgICAgICAgICAgIDxzdHJvbmc+e2l0ZW0udW5pdmVyc2l0eU5hbWV9PC9zdHJvbmc+XG4gICAgICAgICAgICAgICAgICAgICAgPHA+e2l0ZW0ucHJvZ3JhbU5hbWV9PC9wPlxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPFN0YXR1c0JhZGdlIHN0YXR1cz17aXRlbS5zdGF0dXN9IC8+XG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJyZXNvdXJjZS1tZXRhXCI+XG4gICAgICAgICAgICAgICAgICAgIDxzcGFuPntpdGVtLmludGFrZVRlcm19PC9zcGFuPlxuICAgICAgICAgICAgICAgICAgICA8c3Bhbj5VcGRhdGVkIHtmb3JtYXREYXRlVGltZShpdGVtLnVwZGF0ZWRBdCl9PC9zcGFuPlxuICAgICAgICAgICAgICAgICAgICB7aXNBZG1pbiAmJiBpdGVtLnVzZXIgPyA8c3Bhbj57aXRlbS51c2VyLmZ1bGxOYW1lfTwvc3Bhbj4gOiBudWxsfVxuICAgICAgICAgICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICAgICAgICAgIHtpdGVtLm5vdGVzID8gPHAgY2xhc3NOYW1lPVwicmVzb3VyY2UtYm9keVwiPntpdGVtLm5vdGVzfTwvcD4gOiBudWxsfVxuXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlc291cmNlLWFjdGlvbnNcIj5cbiAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuXCIgb25DbGljaz17KCkgPT4gb25FZGl0KGl0ZW0pfT5cbiAgICAgICAgICAgICAgICAgICAgICBFZGl0XG4gICAgICAgICAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgICAgICAgICAgICA8YnV0dG9uIHR5cGU9XCJidXR0b25cIiBjbGFzc05hbWU9XCJnaG9zdC1idG4gZGFuZ2VyLWJ0blwiIG9uQ2xpY2s9eygpID0+IG9uRGVsZXRlKGl0ZW0uX2lkKX0+XG4gICAgICAgICAgICAgICAgICAgICAgRGVsZXRlXG4gICAgICAgICAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICAgICAgICAgIDxzbWFsbCBjbGFzc05hbWU9XCJyZXNvdXJjZS1mb290bm90ZVwiPkNyZWF0ZWQge2Zvcm1hdERhdGUoaXRlbS5jcmVhdGVkQXQpfTwvc21hbGw+XG4gICAgICAgICAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICAgICAgICApKX1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICA8RW1wdHlTdGF0ZVxuICAgICAgICAgICAgICB0aXRsZT1cIk5vIGFwcGxpY2F0aW9uIHJlY29yZHMgeWV0XCJcbiAgICAgICAgICAgICAgZGVzY3JpcHRpb249XCJZb3VyIGFwcGxpY2F0aW9ucyB3aWxsIGFwcGVhciBoZXJlIGFmdGVyIHlvdSBhZGQgb25lLlwiXG4gICAgICAgICAgICAvPlxuICAgICAgICAgICl9XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9kaXY+XG4gICAgPC9zZWN0aW9uPlxuICApO1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy9IYWthbi9EZXNrdG9wL2NlbnRyYWxjb25uZWN0L2NsaWVudC9zcmMvcGFnZXMvQXBwbGljYXRpb25zUGFnZS5qc3gifQ==

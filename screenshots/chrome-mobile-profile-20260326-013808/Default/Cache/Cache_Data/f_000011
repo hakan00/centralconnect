@@ -1,0 +1,229 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/Hero.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c1449b3d"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import { Link } from "/node_modules/.vite/deps/react-router-dom.js?v=c1449b3d";
+import { useAuth } from "/src/context/AuthContext.jsx";
+import LoadingState from "/src/components/LoadingState.jsx";
+import { truncateText } from "/src/utils/formatters.js";
+export default function Hero({ overview, loading }) {
+  _s();
+  const { user } = useAuth();
+  const metrics = overview?.metrics || {};
+  const featuredGuide = overview?.featuredGuides?.[0];
+  const featuredTour = overview?.featuredTours?.[0];
+  const spotlightPost = overview?.latestPosts?.[0];
+  return /* @__PURE__ */ jsxDEV("section", { className: "hero reveal", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "hero-copy", children: [
+      /* @__PURE__ */ jsxDEV("p", { className: "eyebrow", children: "Arrival, Legal and City Services" }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 35,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("h1", { children: "Everything you need to settle in and get around." }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 36,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { children: "Book your airport transfer, follow legal requests, track university applications, and browse city tours from one account." }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 37,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "hero-actions", children: [
+        /* @__PURE__ */ jsxDEV(Link, { to: user ? "/dashboard" : "/register", className: "primary-btn", children: user ? "Open Dashboard" : "Create Account" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 41,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Link, { to: "/tours", className: "secondary-btn", children: "Explore Tours" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 44,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 40,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "hero-inline-stats", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: metrics.legalGuides || 0 }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+            lineNumber: 48,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Legal guides" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+            lineNumber: 49,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 47,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: metrics.tours || 0 }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+            lineNumber: 52,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Tours" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+            lineNumber: 53,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 51,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: metrics.communityPosts || 0 }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+            lineNumber: 56,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Community posts" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+            lineNumber: 57,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 55,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 46,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+      lineNumber: 34,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "hero-card-stack", children: loading ? /* @__PURE__ */ jsxDEV("div", { className: "panel hero-panel", children: /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading home page..." }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+      lineNumber: 65,
+      columnNumber: 13
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+      lineNumber: 64,
+      columnNumber: 9
+    }, this) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+      /* @__PURE__ */ jsxDEV("article", { className: "feature-card hero-panel", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Legal Help" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 70,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("h3", { children: featuredGuide?.title || "Guides for common legal tasks" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 71,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: truncateText(featuredGuide?.summary || "Useful information for registration, residence, and document checks.", 120) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 72,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 69,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ jsxDEV("article", { className: "feature-card hero-panel", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "City Guide" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 75,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("h3", { children: featuredTour?.title || "Tours will appear here" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 76,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: truncateText(featuredTour?.description || "Browse orientation walks, transport help, and local recommendations.", 120) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 77,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 74,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ jsxDEV("article", { className: "feature-card hero-panel hero-panel-wide", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Community" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 80,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("h3", { children: spotlightPost?.title || "No recent discussion yet" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 81,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: truncateText(spotlightPost?.content || "Questions, tips, and updates from the community will appear here.", 160) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+          lineNumber: 82,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+        lineNumber: 79,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+      lineNumber: 68,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+      lineNumber: 62,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx",
+    lineNumber: 33,
+    columnNumber: 5
+  }, this);
+}
+_s(Hero, "9ep4vdl3mBfipxjmc+tQCDhw6Ik=", false, function() {
+  return [useAuth];
+});
+_c = Hero;
+var _c;
+$RefreshReg$(_c, "Hero");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Hakan/Desktop/centralconnect/client/src/components/Hero.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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dmlldyIsImxvYWRpbmciLCJfcyIsInVzZXIiLCJtZXRyaWNzIiwiZmVhdHVyZWRHdWlkZSIsImZlYXR1cmVkR3VpZGVzIiwiZmVhdHVyZWRUb3VyIiwiZmVhdHVyZWRUb3VycyIsInNwb3RsaWdodFBvc3QiLCJsYXRlc3RQb3N0cyIsImxlZ2FsR3VpZGVzIiwidG91cnMiLCJjb21tdW5pdHlQb3N0cyIsInRpdGxlIiwic3VtbWFyeSIsImRlc2NyaXB0aW9uIiwiY29udGVudCIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkhlcm8uanN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IExpbmsgfSBmcm9tICdyZWFjdC1yb3V0ZXItZG9tJztcbmltcG9ydCB7IHVzZUF1dGggfSBmcm9tICcuLi9jb250ZXh0L0F1dGhDb250ZXh0LmpzeCc7XG5pbXBvcnQgTG9hZGluZ1N0YXRlIGZyb20gJy4vTG9hZGluZ1N0YXRlLmpzeCc7XG5pbXBvcnQgeyB0cnVuY2F0ZVRleHQgfSBmcm9tICcuLi91dGlscy9mb3JtYXR0ZXJzLmpzJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gSGVybyh7IG92ZXJ2aWV3LCBsb2FkaW5nIH0pIHtcbiAgY29uc3QgeyB1c2VyIH0gPSB1c2VBdXRoKCk7XG4gIGNvbnN0IG1ldHJpY3MgPSBvdmVydmlldz8ubWV0cmljcyB8fCB7fTtcbiAgY29uc3QgZmVhdHVyZWRHdWlkZSA9IG92ZXJ2aWV3Py5mZWF0dXJlZEd1aWRlcz8uWzBdO1xuICBjb25zdCBmZWF0dXJlZFRvdXIgPSBvdmVydmlldz8uZmVhdHVyZWRUb3Vycz8uWzBdO1xuICBjb25zdCBzcG90bGlnaHRQb3N0ID0gb3ZlcnZpZXc/LmxhdGVzdFBvc3RzPy5bMF07XG5cbiAgcmV0dXJuIChcbiAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJoZXJvIHJldmVhbFwiPlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJoZXJvLWNvcHlcIj5cbiAgICAgICAgPHAgY2xhc3NOYW1lPVwiZXllYnJvd1wiPkFycml2YWwsIExlZ2FsIGFuZCBDaXR5IFNlcnZpY2VzPC9wPlxuICAgICAgICA8aDE+RXZlcnl0aGluZyB5b3UgbmVlZCB0byBzZXR0bGUgaW4gYW5kIGdldCBhcm91bmQuPC9oMT5cbiAgICAgICAgPHA+XG4gICAgICAgICAgQm9vayB5b3VyIGFpcnBvcnQgdHJhbnNmZXIsIGZvbGxvdyBsZWdhbCByZXF1ZXN0cywgdHJhY2sgdW5pdmVyc2l0eSBhcHBsaWNhdGlvbnMsIGFuZCBicm93c2UgY2l0eSB0b3VycyBmcm9tIG9uZSBhY2NvdW50LlxuICAgICAgICA8L3A+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiaGVyby1hY3Rpb25zXCI+XG4gICAgICAgICAgPExpbmsgdG89e3VzZXIgPyAnL2Rhc2hib2FyZCcgOiAnL3JlZ2lzdGVyJ30gY2xhc3NOYW1lPVwicHJpbWFyeS1idG5cIj5cbiAgICAgICAgICAgIHt1c2VyID8gJ09wZW4gRGFzaGJvYXJkJyA6ICdDcmVhdGUgQWNjb3VudCd9XG4gICAgICAgICAgPC9MaW5rPlxuICAgICAgICAgIDxMaW5rIHRvPVwiL3RvdXJzXCIgY2xhc3NOYW1lPVwic2Vjb25kYXJ5LWJ0blwiPkV4cGxvcmUgVG91cnM8L0xpbms+XG4gICAgICAgIDwvZGl2PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImhlcm8taW5saW5lLXN0YXRzXCI+XG4gICAgICAgICAgPGRpdj5cbiAgICAgICAgICAgIDxzdHJvbmc+e21ldHJpY3MubGVnYWxHdWlkZXMgfHwgMH08L3N0cm9uZz5cbiAgICAgICAgICAgIDxzcGFuPkxlZ2FsIGd1aWRlczwvc3Bhbj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgPHN0cm9uZz57bWV0cmljcy50b3VycyB8fCAwfTwvc3Ryb25nPlxuICAgICAgICAgICAgPHNwYW4+VG91cnM8L3NwYW4+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPGRpdj5cbiAgICAgICAgICAgIDxzdHJvbmc+e21ldHJpY3MuY29tbXVuaXR5UG9zdHMgfHwgMH08L3N0cm9uZz5cbiAgICAgICAgICAgIDxzcGFuPkNvbW11bml0eSBwb3N0czwvc3Bhbj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cblxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJoZXJvLWNhcmQtc3RhY2tcIj5cbiAgICAgICAge2xvYWRpbmcgPyAoXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwYW5lbCBoZXJvLXBhbmVsXCI+XG4gICAgICAgICAgICA8TG9hZGluZ1N0YXRlIGxhYmVsPVwiTG9hZGluZyBob21lIHBhZ2UuLi5cIiAvPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICApIDogKFxuICAgICAgICAgIDw+XG4gICAgICAgICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9XCJmZWF0dXJlLWNhcmQgaGVyby1wYW5lbFwiPlxuICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJzZWN0aW9uLWtpY2tlclwiPkxlZ2FsIEhlbHA8L3NwYW4+XG4gICAgICAgICAgICAgIDxoMz57ZmVhdHVyZWRHdWlkZT8udGl0bGUgfHwgJ0d1aWRlcyBmb3IgY29tbW9uIGxlZ2FsIHRhc2tzJ308L2gzPlxuICAgICAgICAgICAgICA8cD57dHJ1bmNhdGVUZXh0KGZlYXR1cmVkR3VpZGU/LnN1bW1hcnkgfHwgJ1VzZWZ1bCBpbmZvcm1hdGlvbiBmb3IgcmVnaXN0cmF0aW9uLCByZXNpZGVuY2UsIGFuZCBkb2N1bWVudCBjaGVja3MuJywgMTIwKX08L3A+XG4gICAgICAgICAgICA8L2FydGljbGU+XG4gICAgICAgICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9XCJmZWF0dXJlLWNhcmQgaGVyby1wYW5lbFwiPlxuICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJzZWN0aW9uLWtpY2tlclwiPkNpdHkgR3VpZGU8L3NwYW4+XG4gICAgICAgICAgICAgIDxoMz57ZmVhdHVyZWRUb3VyPy50aXRsZSB8fCAnVG91cnMgd2lsbCBhcHBlYXIgaGVyZSd9PC9oMz5cbiAgICAgICAgICAgICAgPHA+e3RydW5jYXRlVGV4dChmZWF0dXJlZFRvdXI/LmRlc2NyaXB0aW9uIHx8ICdCcm93c2Ugb3JpZW50YXRpb24gd2Fsa3MsIHRyYW5zcG9ydCBoZWxwLCBhbmQgbG9jYWwgcmVjb21tZW5kYXRpb25zLicsIDEyMCl9PC9wPlxuICAgICAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICAgICAgPGFydGljbGUgY2xhc3NOYW1lPVwiZmVhdHVyZS1jYXJkIGhlcm8tcGFuZWwgaGVyby1wYW5lbC13aWRlXCI+XG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInNlY3Rpb24ta2lja2VyXCI+Q29tbXVuaXR5PC9zcGFuPlxuICAgICAgICAgICAgICA8aDM+e3Nwb3RsaWdodFBvc3Q/LnRpdGxlIHx8ICdObyByZWNlbnQgZGlzY3Vzc2lvbiB5ZXQnfTwvaDM+XG4gICAgICAgICAgICAgIDxwPnt0cnVuY2F0ZVRleHQoc3BvdGxpZ2h0UG9zdD8uY29udGVudCB8fCAnUXVlc3Rpb25zLCB0aXBzLCBhbmQgdXBkYXRlcyBmcm9tIHRoZSBjb21tdW5pdHkgd2lsbCBhcHBlYXIgaGVyZS4nLCAxNjApfTwvcD5cbiAgICAgICAgICAgIDwvYXJ0aWNsZT5cbiAgICAgICAgICA8Lz5cbiAgICAgICAgKX1cbiAgICAgIDwvZGl2PlxuICAgIDwvc2VjdGlvbj5cbiAgKTtcbn1cbiJdLCJmaWxlIjoiQzovVXNlcnMvSGFrYW4vRGVza3RvcC9jZW50cmFsY29ubmVjdC9jbGllbnQvc3JjL2NvbXBvbmVudHMvSGVyby5qc3gifQ==

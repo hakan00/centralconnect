@@ -1,0 +1,452 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/HomePage.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c1449b3d"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=c1449b3d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useState = __vite__cjsImport3_react["useState"];
+import { Link } from "/node_modules/.vite/deps/react-router-dom.js?v=c1449b3d";
+import api from "/src/api/api.js";
+import EmptyState from "/src/components/EmptyState.jsx";
+import Hero from "/src/components/Hero.jsx";
+import LoadingState from "/src/components/LoadingState.jsx";
+import MetricCard from "/src/components/MetricCard.jsx";
+import PageHeader from "/src/components/PageHeader.jsx";
+import { getApiMessage } from "/src/utils/http.js";
+import { formatLabel, truncateText } from "/src/utils/formatters.js";
+export default function HomePage() {
+  _s();
+  const [overview, setOverview] = useState({
+    metrics: { tours: 0, communityPosts: 0, legalGuides: 0 },
+    featuredTours: [],
+    latestPosts: [],
+    featuredGuides: []
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    const fetchOverview = async () => {
+      try {
+        const { data } = await api.get("/dashboard/public");
+        setOverview(data);
+      } catch (requestError) {
+        setError(getApiMessage(requestError, "Overview could not be loaded."));
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOverview();
+  }, []);
+  return /* @__PURE__ */ jsxDEV(Fragment, { children: [
+    /* @__PURE__ */ jsxDEV(Hero, { overview, loading }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+      lineNumber: 58,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "page-section", children: [
+      /* @__PURE__ */ jsxDEV(
+        PageHeader,
+        {
+          eyebrow: "What You Can Do",
+          title: "Manage your arrival, paperwork, and plans in one place",
+          description: "CentralConnect brings together legal help, local guidance, community posts, and city tours.",
+          level: "h2"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 61,
+          columnNumber: 9
+        },
+        this
+      ),
+      error ? /* @__PURE__ */ jsxDEV("p", { className: "error-text", children: error }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 67,
+        columnNumber: 18
+      }, this) : null,
+      /* @__PURE__ */ jsxDEV("div", { className: "metrics-grid", children: [
+        /* @__PURE__ */ jsxDEV(
+          MetricCard,
+          {
+            label: "Published guides",
+            value: overview.metrics.legalGuides,
+            hint: "Helpful articles for registration, residence, and document checks.",
+            accent: "gold"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 69,
+            columnNumber: 11
+          },
+          this
+        ),
+        /* @__PURE__ */ jsxDEV(
+          MetricCard,
+          {
+            label: "Curated tours",
+            value: overview.metrics.tours,
+            hint: "Routes and guides for getting around the city.",
+            accent: "blue"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 75,
+            columnNumber: 11
+          },
+          this
+        ),
+        /* @__PURE__ */ jsxDEV(
+          MetricCard,
+          {
+            label: "Community activity",
+            value: overview.metrics.communityPosts,
+            hint: "Updates, questions, and tips from other users.",
+            accent: "green"
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 81,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 68,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+      lineNumber: 60,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "page-section showcase-grid", children: [
+      /* @__PURE__ */ jsxDEV("article", { className: "panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: [
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Guidance Library" }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 94,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("h3", { children: "Featured legal guides" }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 95,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 93,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(Link, { className: "ghost-btn", to: "/legal", children: "View guides" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 97,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 92,
+          columnNumber: 13
+        }, this),
+        loading ? /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading legal guides..." }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 100,
+          columnNumber: 11
+        }, this) : overview.featuredGuides.length ? /* @__PURE__ */ jsxDEV("div", { className: "list", children: overview.featuredGuides.map(
+          (guide) => /* @__PURE__ */ jsxDEV("article", { className: "list-card", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-topline", children: [
+              /* @__PURE__ */ jsxDEV("strong", { children: guide.title }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+                lineNumber: 106,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { className: "tag-chip", children: formatLabel(guide.category) }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+                lineNumber: 107,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 105,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: guide.summary }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 109,
+              columnNumber: 19
+            }, this),
+            guide.estimatedTime ? /* @__PURE__ */ jsxDEV("small", { children: [
+              "Estimated time: ",
+              guide.estimatedTime
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 110,
+              columnNumber: 42
+            }, this) : null
+          ] }, guide._id, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 104,
+            columnNumber: 13
+          }, this)
+        ) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 102,
+          columnNumber: 11
+        }, this) : /* @__PURE__ */ jsxDEV(
+          EmptyState,
+          {
+            title: "No guides available",
+            description: "Guides will appear here when they are added."
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 115,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 91,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("article", { className: "panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: [
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Community Feed" }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 125,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("h3", { children: "Recent conversations" }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 126,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 124,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(Link, { className: "ghost-btn", to: "/community", children: "View feed" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 128,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 123,
+          columnNumber: 11
+        }, this),
+        loading ? /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading community posts..." }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 131,
+          columnNumber: 11
+        }, this) : overview.latestPosts.length ? /* @__PURE__ */ jsxDEV("div", { className: "list", children: overview.latestPosts.map(
+          (post) => /* @__PURE__ */ jsxDEV("article", { className: "list-card", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-topline", children: [
+              /* @__PURE__ */ jsxDEV("strong", { children: post.title }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+                lineNumber: 137,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { className: "tag-chip", children: formatLabel(post.tag) }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+                lineNumber: 138,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 136,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: truncateText(post.content, 140) }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 140,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("small", { children: post.user?.fullName || "Community member" }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 141,
+              columnNumber: 19
+            }, this)
+          ] }, post._id, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 135,
+            columnNumber: 13
+          }, this)
+        ) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 133,
+          columnNumber: 11
+        }, this) : /* @__PURE__ */ jsxDEV(
+          EmptyState,
+          {
+            title: "No posts yet",
+            description: "New posts will appear here as people share updates and advice."
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 146,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 122,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+      lineNumber: 90,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "page-section", children: /* @__PURE__ */ jsxDEV("article", { className: "panel reveal", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Digital Guide" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 158,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: "Highlighted city tours" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 159,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 157,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(Link, { className: "ghost-btn", to: "/tours", children: "Browse all tours" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 161,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 156,
+        columnNumber: 11
+      }, this),
+      loading ? /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading tours..." }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 164,
+        columnNumber: 11
+      }, this) : overview.featuredTours.length ? /* @__PURE__ */ jsxDEV("div", { className: "tour-grid", children: overview.featuredTours.map(
+        (tour) => /* @__PURE__ */ jsxDEV("article", { className: "tour-card", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "tag-chip", children: formatLabel(tour.category) }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 169,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: tour.title }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 170,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV("p", { children: tour.description }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 171,
+            columnNumber: 19
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "resource-meta", children: [
+            /* @__PURE__ */ jsxDEV("span", { children: tour.city }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 173,
+              columnNumber: 21
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: tour.duration }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+              lineNumber: 174,
+              columnNumber: 21
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+            lineNumber: 172,
+            columnNumber: 19
+          }, this)
+        ] }, tour._id, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 168,
+          columnNumber: 13
+        }, this)
+      ) }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+        lineNumber: 166,
+        columnNumber: 11
+      }, this) : /* @__PURE__ */ jsxDEV(
+        EmptyState,
+        {
+          title: "No tours available",
+          description: "City tours will appear here when they are added."
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+          lineNumber: 180,
+          columnNumber: 11
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+      lineNumber: 155,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+      lineNumber: 154,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx",
+    lineNumber: 57,
+    columnNumber: 5
+  }, this);
+}
+_s(HomePage, "ZpJlvkfcLzvL6kXDHIrpfM7mEQw=");
+_c = HomePage;
+var _c;
+$RefreshReg$(_c, "HomePage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/HomePage.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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O0FBQUFBLFFBQUksQ0FBQ1ksU0FDM0IsdUJBQUMsYUFBUSxXQUFVLGFBQ2pCO0FBQUEsaUNBQUMsVUFBSyxXQUFVLFlBQVlsQyxzQkFBWWtDLEtBQUtULFFBQVEsS0FBckQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBdUQ7QUFBQSxVQUN2RCx1QkFBQyxRQUFJUyxlQUFLVixTQUFWO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQWdCO0FBQUEsVUFDaEIsdUJBQUMsT0FBR1UsZUFBS0MsZUFBVDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFxQjtBQUFBLFVBQ3JCLHVCQUFDLFNBQUksV0FBVSxpQkFDYjtBQUFBLG1DQUFDLFVBQU1ELGVBQUtFLFFBQVo7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBaUI7QUFBQSxZQUNqQix1QkFBQyxVQUFNRixlQUFLRyxZQUFaO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXFCO0FBQUEsZUFGdkI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFHQTtBQUFBLGFBUGtDSCxLQUFLTixLQUF6QztBQUFBO0FBQUE7QUFBQTtBQUFBLGVBUUE7QUFBQSxNQUNELEtBWEg7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQVlBLElBRUE7QUFBQSxRQUFDO0FBQUE7QUFBQSxVQUNDLE9BQU07QUFBQSxVQUNOLGFBQVk7QUFBQTtBQUFBLFFBRmQ7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BRWdFO0FBQUEsU0EzQnBFO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0E4QkEsS0EvQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQWdDQTtBQUFBLE9BaklGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FrSUE7QUFFSjtBQUFDekIsR0E5SnVCRCxVQUFRO0FBQUEsS0FBUkE7QUFBUSxJQUFBb0M7QUFBQSxhQUFBQSxJQUFBIiwibmFtZXMiOlsidXNlRWZmZWN0IiwidXNlU3RhdGUiLCJMaW5rIiwiYXBpIiwiRW1wdHlTdGF0ZSIsIkhlcm8iLCJMb2FkaW5nU3RhdGUiLCJNZXRyaWNDYXJkIiwiUGFnZUhlYWRlciIsImdldEFwaU1lc3NhZ2UiLCJmb3JtYXRMYWJlbCIsInRydW5jYXRlVGV4dCIsIkhvbWVQYWdlIiwiX3MiLCJvdmVydmlldyIsInNldE92ZXJ2aWV3IiwibWV0cmljcyIsInRvdXJzIiwiY29tbXVuaXR5UG9zdHMiLCJsZWdhbEd1aWRlcyIsImZlYXR1cmVkVG91cnMiLCJsYXRlc3RQb3N0cyIsImZlYXR1cmVkR3VpZGVzIiwibG9hZGluZyIsInNldExvYWRpbmciLCJlcnJvciIsInNldEVycm9yIiwiZmV0Y2hPdmVydmlldyIsImRhdGEiLCJnZXQiLCJyZXF1ZXN0RXJyb3IiLCJsZW5ndGgiLCJtYXAiLCJndWlkZSIsInRpdGxlIiwiY2F0ZWdvcnkiLCJzdW1tYXJ5IiwiZXN0aW1hdGVkVGltZSIsIl9pZCIsInBvc3QiLCJ0YWciLCJjb250ZW50IiwidXNlciIsImZ1bGxOYW1lIiwidG91ciIsImRlc2NyaXB0aW9uIiwiY2l0eSIsImR1cmF0aW9uIiwiX2MiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiSG9tZVBhZ2UuanN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBMaW5rIH0gZnJvbSAncmVhY3Qtcm91dGVyLWRvbSc7XG5pbXBvcnQgYXBpIGZyb20gJy4uL2FwaS9hcGkuanMnO1xuaW1wb3J0IEVtcHR5U3RhdGUgZnJvbSAnLi4vY29tcG9uZW50cy9FbXB0eVN0YXRlLmpzeCc7XG5pbXBvcnQgSGVybyBmcm9tICcuLi9jb21wb25lbnRzL0hlcm8uanN4JztcbmltcG9ydCBMb2FkaW5nU3RhdGUgZnJvbSAnLi4vY29tcG9uZW50cy9Mb2FkaW5nU3RhdGUuanN4JztcbmltcG9ydCBNZXRyaWNDYXJkIGZyb20gJy4uL2NvbXBvbmVudHMvTWV0cmljQ2FyZC5qc3gnO1xuaW1wb3J0IFBhZ2VIZWFkZXIgZnJvbSAnLi4vY29tcG9uZW50cy9QYWdlSGVhZGVyLmpzeCc7XG5pbXBvcnQgeyBnZXRBcGlNZXNzYWdlIH0gZnJvbSAnLi4vdXRpbHMvaHR0cC5qcyc7XG5pbXBvcnQgeyBmb3JtYXRMYWJlbCwgdHJ1bmNhdGVUZXh0IH0gZnJvbSAnLi4vdXRpbHMvZm9ybWF0dGVycy5qcyc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEhvbWVQYWdlKCkge1xuICBjb25zdCBbb3ZlcnZpZXcsIHNldE92ZXJ2aWV3XSA9IHVzZVN0YXRlKHtcbiAgICBtZXRyaWNzOiB7IHRvdXJzOiAwLCBjb21tdW5pdHlQb3N0czogMCwgbGVnYWxHdWlkZXM6IDAgfSxcbiAgICBmZWF0dXJlZFRvdXJzOiBbXSxcbiAgICBsYXRlc3RQb3N0czogW10sXG4gICAgZmVhdHVyZWRHdWlkZXM6IFtdXG4gIH0pO1xuICBjb25zdCBbbG9hZGluZywgc2V0TG9hZGluZ10gPSB1c2VTdGF0ZSh0cnVlKTtcbiAgY29uc3QgW2Vycm9yLCBzZXRFcnJvcl0gPSB1c2VTdGF0ZSgnJyk7XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBjb25zdCBmZXRjaE92ZXJ2aWV3ID0gYXN5bmMgKCkgPT4ge1xuICAgICAgdHJ5IHtcbiAgICAgICAgY29uc3QgeyBkYXRhIH0gPSBhd2FpdCBhcGkuZ2V0KCcvZGFzaGJvYXJkL3B1YmxpYycpO1xuICAgICAgICBzZXRPdmVydmlldyhkYXRhKTtcbiAgICAgIH0gY2F0Y2ggKHJlcXVlc3RFcnJvcikge1xuICAgICAgICBzZXRFcnJvcihnZXRBcGlNZXNzYWdlKHJlcXVlc3RFcnJvciwgJ092ZXJ2aWV3IGNvdWxkIG5vdCBiZSBsb2FkZWQuJykpO1xuICAgICAgfSBmaW5hbGx5IHtcbiAgICAgICAgc2V0TG9hZGluZyhmYWxzZSk7XG4gICAgICB9XG4gICAgfTtcblxuICAgIGZldGNoT3ZlcnZpZXcoKTtcbiAgfSwgW10pO1xuXG4gIHJldHVybiAoXG4gICAgPD5cbiAgICAgIDxIZXJvIG92ZXJ2aWV3PXtvdmVydmlld30gbG9hZGluZz17bG9hZGluZ30gLz5cblxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwicGFnZS1zZWN0aW9uXCI+XG4gICAgICAgIDxQYWdlSGVhZGVyXG4gICAgICAgICAgZXllYnJvdz1cIldoYXQgWW91IENhbiBEb1wiXG4gICAgICAgICAgdGl0bGU9XCJNYW5hZ2UgeW91ciBhcnJpdmFsLCBwYXBlcndvcmssIGFuZCBwbGFucyBpbiBvbmUgcGxhY2VcIlxuICAgICAgICAgIGRlc2NyaXB0aW9uPVwiQ2VudHJhbENvbm5lY3QgYnJpbmdzIHRvZ2V0aGVyIGxlZ2FsIGhlbHAsIGxvY2FsIGd1aWRhbmNlLCBjb21tdW5pdHkgcG9zdHMsIGFuZCBjaXR5IHRvdXJzLlwiXG4gICAgICAgICAgbGV2ZWw9XCJoMlwiXG4gICAgICAgIC8+XG4gICAgICAgIHtlcnJvciA/IDxwIGNsYXNzTmFtZT1cImVycm9yLXRleHRcIj57ZXJyb3J9PC9wPiA6IG51bGx9XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwibWV0cmljcy1ncmlkXCI+XG4gICAgICAgICAgPE1ldHJpY0NhcmRcbiAgICAgICAgICAgIGxhYmVsPVwiUHVibGlzaGVkIGd1aWRlc1wiXG4gICAgICAgICAgICB2YWx1ZT17b3ZlcnZpZXcubWV0cmljcy5sZWdhbEd1aWRlc31cbiAgICAgICAgICAgIGhpbnQ9XCJIZWxwZnVsIGFydGljbGVzIGZvciByZWdpc3RyYXRpb24sIHJlc2lkZW5jZSwgYW5kIGRvY3VtZW50IGNoZWNrcy5cIlxuICAgICAgICAgICAgYWNjZW50PVwiZ29sZFwiXG4gICAgICAgICAgLz5cbiAgICAgICAgICA8TWV0cmljQ2FyZFxuICAgICAgICAgICAgbGFiZWw9XCJDdXJhdGVkIHRvdXJzXCJcbiAgICAgICAgICAgIHZhbHVlPXtvdmVydmlldy5tZXRyaWNzLnRvdXJzfVxuICAgICAgICAgICAgaGludD1cIlJvdXRlcyBhbmQgZ3VpZGVzIGZvciBnZXR0aW5nIGFyb3VuZCB0aGUgY2l0eS5cIlxuICAgICAgICAgICAgYWNjZW50PVwiYmx1ZVwiXG4gICAgICAgICAgLz5cbiAgICAgICAgICA8TWV0cmljQ2FyZFxuICAgICAgICAgICAgbGFiZWw9XCJDb21tdW5pdHkgYWN0aXZpdHlcIlxuICAgICAgICAgICAgdmFsdWU9e292ZXJ2aWV3Lm1ldHJpY3MuY29tbXVuaXR5UG9zdHN9XG4gICAgICAgICAgICBoaW50PVwiVXBkYXRlcywgcXVlc3Rpb25zLCBhbmQgdGlwcyBmcm9tIG90aGVyIHVzZXJzLlwiXG4gICAgICAgICAgICBhY2NlbnQ9XCJncmVlblwiXG4gICAgICAgICAgLz5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L3NlY3Rpb24+XG5cbiAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cInBhZ2Utc2VjdGlvbiBzaG93Y2FzZS1ncmlkXCI+XG4gICAgICAgIDxhcnRpY2xlIGNsYXNzTmFtZT1cInBhbmVsIHJldmVhbFwiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwYW5lbC1oZWFkaW5nXCI+XG4gICAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwic2VjdGlvbi1raWNrZXJcIj5HdWlkYW5jZSBMaWJyYXJ5PC9zcGFuPlxuICAgICAgICAgICAgICAgIDxoMz5GZWF0dXJlZCBsZWdhbCBndWlkZXM8L2gzPlxuICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgIDxMaW5rIGNsYXNzTmFtZT1cImdob3N0LWJ0blwiIHRvPVwiL2xlZ2FsXCI+VmlldyBndWlkZXM8L0xpbms+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAge2xvYWRpbmcgPyAoXG4gICAgICAgICAgICA8TG9hZGluZ1N0YXRlIGxhYmVsPVwiTG9hZGluZyBsZWdhbCBndWlkZXMuLi5cIiAvPlxuICAgICAgICAgICkgOiBvdmVydmlldy5mZWF0dXJlZEd1aWRlcy5sZW5ndGggPyAoXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImxpc3RcIj5cbiAgICAgICAgICAgICAge292ZXJ2aWV3LmZlYXR1cmVkR3VpZGVzLm1hcCgoZ3VpZGUpID0+IChcbiAgICAgICAgICAgICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9XCJsaXN0LWNhcmRcIiBrZXk9e2d1aWRlLl9pZH0+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlc291cmNlLXRvcGxpbmVcIj5cbiAgICAgICAgICAgICAgICAgICAgPHN0cm9uZz57Z3VpZGUudGl0bGV9PC9zdHJvbmc+XG4gICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRhZy1jaGlwXCI+e2Zvcm1hdExhYmVsKGd1aWRlLmNhdGVnb3J5KX08L3NwYW4+XG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgIDxwPntndWlkZS5zdW1tYXJ5fTwvcD5cbiAgICAgICAgICAgICAgICAgIHtndWlkZS5lc3RpbWF0ZWRUaW1lID8gPHNtYWxsPkVzdGltYXRlZCB0aW1lOiB7Z3VpZGUuZXN0aW1hdGVkVGltZX08L3NtYWxsPiA6IG51bGx9XG4gICAgICAgICAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICAgICAgICApKX1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICA8RW1wdHlTdGF0ZVxuICAgICAgICAgICAgICB0aXRsZT1cIk5vIGd1aWRlcyBhdmFpbGFibGVcIlxuICAgICAgICAgICAgICBkZXNjcmlwdGlvbj1cIkd1aWRlcyB3aWxsIGFwcGVhciBoZXJlIHdoZW4gdGhleSBhcmUgYWRkZWQuXCJcbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgKX1cbiAgICAgICAgPC9hcnRpY2xlPlxuXG4gICAgICAgIDxhcnRpY2xlIGNsYXNzTmFtZT1cInBhbmVsIHJldmVhbFwiPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicGFuZWwtaGVhZGluZ1wiPlxuICAgICAgICAgICAgPGRpdj5cbiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwic2VjdGlvbi1raWNrZXJcIj5Db21tdW5pdHkgRmVlZDwvc3Bhbj5cbiAgICAgICAgICAgICAgPGgzPlJlY2VudCBjb252ZXJzYXRpb25zPC9oMz5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPExpbmsgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuXCIgdG89XCIvY29tbXVuaXR5XCI+VmlldyBmZWVkPC9MaW5rPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIHtsb2FkaW5nID8gKFxuICAgICAgICAgICAgPExvYWRpbmdTdGF0ZSBsYWJlbD1cIkxvYWRpbmcgY29tbXVuaXR5IHBvc3RzLi4uXCIgLz5cbiAgICAgICAgICApIDogb3ZlcnZpZXcubGF0ZXN0UG9zdHMubGVuZ3RoID8gKFxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJsaXN0XCI+XG4gICAgICAgICAgICAgIHtvdmVydmlldy5sYXRlc3RQb3N0cy5tYXAoKHBvc3QpID0+IChcbiAgICAgICAgICAgICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9XCJsaXN0LWNhcmRcIiBrZXk9e3Bvc3QuX2lkfT5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVzb3VyY2UtdG9wbGluZVwiPlxuICAgICAgICAgICAgICAgICAgICA8c3Ryb25nPntwb3N0LnRpdGxlfTwvc3Ryb25nPlxuICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0YWctY2hpcFwiPntmb3JtYXRMYWJlbChwb3N0LnRhZyl9PC9zcGFuPlxuICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgICA8cD57dHJ1bmNhdGVUZXh0KHBvc3QuY29udGVudCwgMTQwKX08L3A+XG4gICAgICAgICAgICAgICAgICA8c21hbGw+e3Bvc3QudXNlcj8uZnVsbE5hbWUgfHwgJ0NvbW11bml0eSBtZW1iZXInfTwvc21hbGw+XG4gICAgICAgICAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICAgICAgICApKX1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICA8RW1wdHlTdGF0ZVxuICAgICAgICAgICAgICB0aXRsZT1cIk5vIHBvc3RzIHlldFwiXG4gICAgICAgICAgICAgIGRlc2NyaXB0aW9uPVwiTmV3IHBvc3RzIHdpbGwgYXBwZWFyIGhlcmUgYXMgcGVvcGxlIHNoYXJlIHVwZGF0ZXMgYW5kIGFkdmljZS5cIlxuICAgICAgICAgICAgLz5cbiAgICAgICAgICApfVxuICAgICAgICA8L2FydGljbGU+XG4gICAgICA8L3NlY3Rpb24+XG5cbiAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cInBhZ2Utc2VjdGlvblwiPlxuICAgICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9XCJwYW5lbCByZXZlYWxcIj5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInBhbmVsLWhlYWRpbmdcIj5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInNlY3Rpb24ta2lja2VyXCI+RGlnaXRhbCBHdWlkZTwvc3Bhbj5cbiAgICAgICAgICAgICAgPGgzPkhpZ2hsaWdodGVkIGNpdHkgdG91cnM8L2gzPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8TGluayBjbGFzc05hbWU9XCJnaG9zdC1idG5cIiB0bz1cIi90b3Vyc1wiPkJyb3dzZSBhbGwgdG91cnM8L0xpbms+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAge2xvYWRpbmcgPyAoXG4gICAgICAgICAgICA8TG9hZGluZ1N0YXRlIGxhYmVsPVwiTG9hZGluZyB0b3Vycy4uLlwiIC8+XG4gICAgICAgICAgKSA6IG92ZXJ2aWV3LmZlYXR1cmVkVG91cnMubGVuZ3RoID8gKFxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0b3VyLWdyaWRcIj5cbiAgICAgICAgICAgICAge292ZXJ2aWV3LmZlYXR1cmVkVG91cnMubWFwKCh0b3VyKSA9PiAoXG4gICAgICAgICAgICAgICAgPGFydGljbGUgY2xhc3NOYW1lPVwidG91ci1jYXJkXCIga2V5PXt0b3VyLl9pZH0+XG4gICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0YWctY2hpcFwiPntmb3JtYXRMYWJlbCh0b3VyLmNhdGVnb3J5KX08L3NwYW4+XG4gICAgICAgICAgICAgICAgICA8aDM+e3RvdXIudGl0bGV9PC9oMz5cbiAgICAgICAgICAgICAgICAgIDxwPnt0b3VyLmRlc2NyaXB0aW9ufTwvcD5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVzb3VyY2UtbWV0YVwiPlxuICAgICAgICAgICAgICAgICAgICA8c3Bhbj57dG91ci5jaXR5fTwvc3Bhbj5cbiAgICAgICAgICAgICAgICAgICAgPHNwYW4+e3RvdXIuZHVyYXRpb259PC9zcGFuPlxuICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICAgICAgICApKX1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICA8RW1wdHlTdGF0ZVxuICAgICAgICAgICAgICB0aXRsZT1cIk5vIHRvdXJzIGF2YWlsYWJsZVwiXG4gICAgICAgICAgICAgIGRlc2NyaXB0aW9uPVwiQ2l0eSB0b3VycyB3aWxsIGFwcGVhciBoZXJlIHdoZW4gdGhleSBhcmUgYWRkZWQuXCJcbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgKX1cbiAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgPC9zZWN0aW9uPlxuICAgIDwvPlxuICApO1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy9IYWthbi9EZXNrdG9wL2NlbnRyYWxjb25uZWN0L2NsaWVudC9zcmMvcGFnZXMvSG9tZVBhZ2UuanN4In0=

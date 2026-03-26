@@ -1,0 +1,280 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/RegisterPage.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c1449b3d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=c1449b3d"; const useState = __vite__cjsImport3_react["useState"];
+import { Link, useNavigate } from "/node_modules/.vite/deps/react-router-dom.js?v=c1449b3d";
+import api from "/src/api/api.js";
+import { useAuth } from "/src/context/AuthContext.jsx";
+import { getApiMessage } from "/src/utils/http.js";
+export default function RegisterPage() {
+  _s();
+  const [form, setForm] = useState({ fullName: "", email: "", password: "", nationality: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await api.post("/auth/register", form);
+      login(data);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(getApiMessage(err, "Registration failed"));
+    }
+  };
+  return /* @__PURE__ */ jsxDEV("section", { className: "auth-shell", children: [
+    /* @__PURE__ */ jsxDEV("article", { className: "auth-showcase reveal", children: [
+      /* @__PURE__ */ jsxDEV("p", { className: "eyebrow", children: "Create Account" }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 46,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("h1", { children: "Start using CentralConnect." }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 47,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { children: "Create your account to book services, track requests, and keep your information in one place." }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 48,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "auth-points", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "auth-point", children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: "Simple setup" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 53,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Create your account and start using all main sections right away." }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 54,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 52,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "auth-point", children: [
+          /* @__PURE__ */ jsxDEV("strong", { children: "Your information stays together" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 57,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Keep transfers, legal requests, and applications in one place." }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 58,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 56,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 51,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+      lineNumber: 45,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "auth-card reveal", children: [
+      /* @__PURE__ */ jsxDEV("h2", { children: "Create Account" }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 64,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "auth-caption", children: "Create your account to start using the service." }, void 0, false, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 65,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("form", { onSubmit, className: "form-grid", children: [
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Full name" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 68,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Your full name",
+              value: form.fullName,
+              onChange: (e) => setForm({ ...form, fullName: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+              lineNumber: 69,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 67,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Nationality" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 76,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Country of origin",
+              value: form.nationality,
+              onChange: (e) => setForm({ ...form, nationality: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+              lineNumber: 77,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 75,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Email" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 84,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "email",
+              placeholder: "name@example.com",
+              value: form.email,
+              onChange: (e) => setForm({ ...form, email: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+              lineNumber: 85,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 83,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Password" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+            lineNumber: 93,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "password",
+              placeholder: "Create a password",
+              value: form.password,
+              onChange: (e) => setForm({ ...form, password: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+              lineNumber: 94,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 92,
+          columnNumber: 11
+        }, this),
+        error ? /* @__PURE__ */ jsxDEV("p", { className: "error-text", children: error }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 101,
+          columnNumber: 20
+        }, this) : null,
+        /* @__PURE__ */ jsxDEV("button", { className: "primary-btn", children: "Register" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 102,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 66,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "auth-switch", children: [
+        "Already have an account? ",
+        /* @__PURE__ */ jsxDEV(Link, { to: "/login", children: "Login here" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+          lineNumber: 105,
+          columnNumber: 36
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+        lineNumber: 104,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+      lineNumber: 63,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx",
+    lineNumber: 44,
+    columnNumber: 5
+  }, this);
+}
+_s(RegisterPage, "3SV1iehcDSXLkpmrd2JtGeZOBQ0=", false, function() {
+  return [useNavigate, useAuth];
+});
+_c = RegisterPage;
+var _c;
+$RefreshReg$(_c, "RegisterPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/RegisterPage.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUEsVUFJa0U7QUFBQSxhQU5wRTtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBUUE7QUFBQSxRQUNDWCxRQUFRLHVCQUFDLE9BQUUsV0FBVSxjQUFjQSxtQkFBM0I7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUFpQyxJQUFPO0FBQUEsUUFDakQsdUJBQUMsWUFBTyxXQUFVLGVBQWMsd0JBQWhDO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBd0M7QUFBQSxXQXBDMUM7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQXFDQTtBQUFBLE1BQ0EsdUJBQUMsT0FBRSxXQUFVLGVBQWE7QUFBQTtBQUFBLFFBQ0MsdUJBQUMsUUFBSyxJQUFHLFVBQVMsMEJBQWxCO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBNEI7QUFBQSxXQUR2RDtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBRUE7QUFBQSxTQTNDRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBNENBO0FBQUEsT0EvREY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQWdFQTtBQUVKO0FBQUNQLEdBcEZ1QkQsY0FBWTtBQUFBLFVBR2pCSixhQUNDRSxPQUFPO0FBQUE7QUFBQSxLQUpIRTtBQUFZLElBQUFvQjtBQUFBLGFBQUFBLElBQUEiLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsIkxpbmsiLCJ1c2VOYXZpZ2F0ZSIsImFwaSIsInVzZUF1dGgiLCJnZXRBcGlNZXNzYWdlIiwiUmVnaXN0ZXJQYWdlIiwiX3MiLCJmb3JtIiwic2V0Rm9ybSIsImZ1bGxOYW1lIiwiZW1haWwiLCJwYXNzd29yZCIsIm5hdGlvbmFsaXR5IiwiZXJyb3IiLCJzZXRFcnJvciIsIm5hdmlnYXRlIiwibG9naW4iLCJvblN1Ym1pdCIsImUiLCJwcmV2ZW50RGVmYXVsdCIsImRhdGEiLCJwb3N0IiwiZXJyIiwidGFyZ2V0IiwidmFsdWUiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJSZWdpc3RlclBhZ2UuanN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZVN0YXRlIH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0IHsgTGluaywgdXNlTmF2aWdhdGUgfSBmcm9tICdyZWFjdC1yb3V0ZXItZG9tJztcbmltcG9ydCBhcGkgZnJvbSAnLi4vYXBpL2FwaS5qcyc7XG5pbXBvcnQgeyB1c2VBdXRoIH0gZnJvbSAnLi4vY29udGV4dC9BdXRoQ29udGV4dC5qc3gnO1xuaW1wb3J0IHsgZ2V0QXBpTWVzc2FnZSB9IGZyb20gJy4uL3V0aWxzL2h0dHAuanMnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBSZWdpc3RlclBhZ2UoKSB7XG4gIGNvbnN0IFtmb3JtLCBzZXRGb3JtXSA9IHVzZVN0YXRlKHsgZnVsbE5hbWU6ICcnLCBlbWFpbDogJycsIHBhc3N3b3JkOiAnJywgbmF0aW9uYWxpdHk6ICcnIH0pO1xuICBjb25zdCBbZXJyb3IsIHNldEVycm9yXSA9IHVzZVN0YXRlKCcnKTtcbiAgY29uc3QgbmF2aWdhdGUgPSB1c2VOYXZpZ2F0ZSgpO1xuICBjb25zdCB7IGxvZ2luIH0gPSB1c2VBdXRoKCk7XG5cbiAgY29uc3Qgb25TdWJtaXQgPSBhc3luYyAoZSkgPT4ge1xuICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICB0cnkge1xuICAgICAgY29uc3QgeyBkYXRhIH0gPSBhd2FpdCBhcGkucG9zdCgnL2F1dGgvcmVnaXN0ZXInLCBmb3JtKTtcbiAgICAgIGxvZ2luKGRhdGEpO1xuICAgICAgbmF2aWdhdGUoJy9kYXNoYm9hcmQnKTtcbiAgICB9IGNhdGNoIChlcnIpIHtcbiAgICAgIHNldEVycm9yKGdldEFwaU1lc3NhZ2UoZXJyLCAnUmVnaXN0cmF0aW9uIGZhaWxlZCcpKTtcbiAgICB9XG4gIH07XG5cbiAgcmV0dXJuIChcbiAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJhdXRoLXNoZWxsXCI+XG4gICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9XCJhdXRoLXNob3djYXNlIHJldmVhbFwiPlxuICAgICAgICA8cCBjbGFzc05hbWU9XCJleWVicm93XCI+Q3JlYXRlIEFjY291bnQ8L3A+XG4gICAgICAgIDxoMT5TdGFydCB1c2luZyBDZW50cmFsQ29ubmVjdC48L2gxPlxuICAgICAgICA8cD5cbiAgICAgICAgICBDcmVhdGUgeW91ciBhY2NvdW50IHRvIGJvb2sgc2VydmljZXMsIHRyYWNrIHJlcXVlc3RzLCBhbmQga2VlcCB5b3VyIGluZm9ybWF0aW9uIGluIG9uZSBwbGFjZS5cbiAgICAgICAgPC9wPlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImF1dGgtcG9pbnRzXCI+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhdXRoLXBvaW50XCI+XG4gICAgICAgICAgICA8c3Ryb25nPlNpbXBsZSBzZXR1cDwvc3Ryb25nPlxuICAgICAgICAgICAgPHNwYW4+Q3JlYXRlIHlvdXIgYWNjb3VudCBhbmQgc3RhcnQgdXNpbmcgYWxsIG1haW4gc2VjdGlvbnMgcmlnaHQgYXdheS48L3NwYW4+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhdXRoLXBvaW50XCI+XG4gICAgICAgICAgICA8c3Ryb25nPllvdXIgaW5mb3JtYXRpb24gc3RheXMgdG9nZXRoZXI8L3N0cm9uZz5cbiAgICAgICAgICAgIDxzcGFuPktlZXAgdHJhbnNmZXJzLCBsZWdhbCByZXF1ZXN0cywgYW5kIGFwcGxpY2F0aW9ucyBpbiBvbmUgcGxhY2UuPC9zcGFuPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvYXJ0aWNsZT5cblxuICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwiYXV0aC1jYXJkIHJldmVhbFwiPlxuICAgICAgICA8aDI+Q3JlYXRlIEFjY291bnQ8L2gyPlxuICAgICAgICA8cCBjbGFzc05hbWU9XCJhdXRoLWNhcHRpb25cIj5DcmVhdGUgeW91ciBhY2NvdW50IHRvIHN0YXJ0IHVzaW5nIHRoZSBzZXJ2aWNlLjwvcD5cbiAgICAgICAgPGZvcm0gb25TdWJtaXQ9e29uU3VibWl0fSBjbGFzc05hbWU9XCJmb3JtLWdyaWRcIj5cbiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgIDxzcGFuPkZ1bGwgbmFtZTwvc3Bhbj5cbiAgICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIllvdXIgZnVsbCBuYW1lXCJcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm0uZnVsbE5hbWV9XG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIGZ1bGxOYW1lOiBlLnRhcmdldC52YWx1ZSB9KX1cbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgIDxzcGFuPk5hdGlvbmFsaXR5PC9zcGFuPlxuICAgICAgICAgICAgPGlucHV0XG4gICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiQ291bnRyeSBvZiBvcmlnaW5cIlxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5uYXRpb25hbGl0eX1cbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgbmF0aW9uYWxpdHk6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgPHNwYW4+RW1haWw8L3NwYW4+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgdHlwZT1cImVtYWlsXCJcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJuYW1lQGV4YW1wbGUuY29tXCJcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm0uZW1haWx9XG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIGVtYWlsOiBlLnRhcmdldC52YWx1ZSB9KX1cbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgIDxzcGFuPlBhc3N3b3JkPC9zcGFuPlxuICAgICAgICAgICAgPGlucHV0XG4gICAgICAgICAgICAgIHR5cGU9XCJwYXNzd29yZFwiXG4gICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiQ3JlYXRlIGEgcGFzc3dvcmRcIlxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5wYXNzd29yZH1cbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgcGFzc3dvcmQ6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIHtlcnJvciA/IDxwIGNsYXNzTmFtZT1cImVycm9yLXRleHRcIj57ZXJyb3J9PC9wPiA6IG51bGx9XG4gICAgICAgICAgPGJ1dHRvbiBjbGFzc05hbWU9XCJwcmltYXJ5LWJ0blwiPlJlZ2lzdGVyPC9idXR0b24+XG4gICAgICAgIDwvZm9ybT5cbiAgICAgICAgPHAgY2xhc3NOYW1lPVwiYXV0aC1zd2l0Y2hcIj5cbiAgICAgICAgICBBbHJlYWR5IGhhdmUgYW4gYWNjb3VudD8gPExpbmsgdG89XCIvbG9naW5cIj5Mb2dpbiBoZXJlPC9MaW5rPlxuICAgICAgICA8L3A+XG4gICAgICA8L3NlY3Rpb24+XG4gICAgPC9zZWN0aW9uPlxuICApO1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy9IYWthbi9EZXNrdG9wL2NlbnRyYWxjb25uZWN0L2NsaWVudC9zcmMvcGFnZXMvUmVnaXN0ZXJQYWdlLmpzeCJ9

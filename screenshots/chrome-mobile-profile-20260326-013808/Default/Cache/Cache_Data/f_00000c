@@ -1,0 +1,503 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/TransfersPage.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c1449b3d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=c1449b3d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useState = __vite__cjsImport3_react["useState"];
+import api from "/src/api/api.js";
+import EmptyState from "/src/components/EmptyState.jsx";
+import LoadingState from "/src/components/LoadingState.jsx";
+import PageHeader from "/src/components/PageHeader.jsx";
+import StatusBadge from "/src/components/StatusBadge.jsx";
+import { useAuth } from "/src/context/AuthContext.jsx";
+import { getApiMessage } from "/src/utils/http.js";
+import { formatDateTime, toInputDateTime } from "/src/utils/formatters.js";
+const emptyForm = {
+  airport: "",
+  destination: "",
+  arrivalDate: "",
+  passengers: 1,
+  notes: ""
+};
+const transferStatuses = ["pending", "confirmed", "completed", "cancelled"];
+export default function TransfersPage() {
+  _s();
+  const { user } = useAuth();
+  const [transfers, setTransfers] = useState([]);
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const isAdmin = user?.role === "admin";
+  const fetchTransfers = async () => {
+    try {
+      const { data } = await api.get("/transfers");
+      setTransfers(data);
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Transfers could not be loaded."));
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchTransfers();
+  }, []);
+  const resetForm = () => {
+    setForm(emptyForm);
+    setEditingId("");
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError("");
+    try {
+      if (editingId) {
+        await api.put(`/transfers/${editingId}`, form);
+      } else {
+        await api.post("/transfers", form);
+      }
+      resetForm();
+      await fetchTransfers();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Transfer could not be saved."));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  const onEdit = (item) => {
+    setEditingId(item._id);
+    setForm({
+      airport: item.airport,
+      destination: item.destination,
+      arrivalDate: toInputDateTime(item.arrivalDate),
+      passengers: item.passengers,
+      notes: item.notes || ""
+    });
+  };
+  const onDelete = async (id) => {
+    if (!window.confirm("Delete this transfer request?")) {
+      return;
+    }
+    try {
+      await api.delete(`/transfers/${id}`);
+      if (editingId === id) {
+        resetForm();
+      }
+      await fetchTransfers();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Transfer could not be deleted."));
+    }
+  };
+  const onStatusChange = async (id, status) => {
+    try {
+      await api.patch(`/transfers/${id}/status`, { status });
+      await fetchTransfers();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Transfer status could not be updated."));
+    }
+  };
+  return /* @__PURE__ */ jsxDEV("section", { className: "page-shell", children: [
+    /* @__PURE__ */ jsxDEV(
+      PageHeader,
+      {
+        eyebrow: "Arrival Services",
+        title: "Airport transfer management",
+        description: "Book, update, and track your airport transfer requests.",
+        actions: editingId ? /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: resetForm, children: "Cancel editing" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 136,
+          columnNumber: 9
+        }, this) : null
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+        lineNumber: 130,
+        columnNumber: 7
+      },
+      this
+    ),
+    error ? /* @__PURE__ */ jsxDEV("p", { className: "error-text", children: error }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+      lineNumber: 143,
+      columnNumber: 16
+    }, this) : null,
+    /* @__PURE__ */ jsxDEV("div", { className: "workspace-grid", children: [
+      /* @__PURE__ */ jsxDEV("form", { onSubmit, className: "panel form-grid sticky-panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Request Form" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 149,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: editingId ? "Update transfer request" : "Create transfer request" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 150,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 148,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 147,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Airport" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 155,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Vaclav Havel Airport",
+              value: form.airport,
+              onChange: (e) => setForm({ ...form, airport: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 156,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 154,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Destination" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 163,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Student dormitory or hotel",
+              value: form.destination,
+              onChange: (e) => setForm({ ...form, destination: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 164,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 162,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Arrival date and time" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 171,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "datetime-local",
+              value: form.arrivalDate,
+              onChange: (e) => setForm({ ...form, arrivalDate: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 172,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 170,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Passengers" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 179,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "number",
+              min: "1",
+              value: form.passengers,
+              onChange: (e) => setForm({ ...form, passengers: Number(e.target.value) })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 180,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 178,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Notes" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 188,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "textarea",
+            {
+              placeholder: "Flight number, arrival hall, luggage details, or special instructions",
+              value: form.notes,
+              onChange: (e) => setForm({ ...form, notes: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 189,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 187,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "button-row", children: [
+          /* @__PURE__ */ jsxDEV("button", { className: "primary-btn", disabled: submitting, children: submitting ? "Saving..." : editingId ? "Update Transfer" : "Create Transfer" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 197,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: resetForm, children: "Reset" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 200,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 196,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+        lineNumber: 146,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Requests" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 209,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: isAdmin ? "All transfer requests" : "My transfer requests" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 210,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 208,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 207,
+          columnNumber: 11
+        }, this),
+        loading ? /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading transfers..." }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 215,
+          columnNumber: 11
+        }, this) : transfers.length ? /* @__PURE__ */ jsxDEV("div", { className: "list", children: transfers.map(
+          (item) => /* @__PURE__ */ jsxDEV("article", { className: "resource-card", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-topline", children: [
+              /* @__PURE__ */ jsxDEV("div", { children: [
+                /* @__PURE__ */ jsxDEV("strong", { children: [
+                  item.airport,
+                  " to ",
+                  item.destination
+                ] }, void 0, true, {
+                  fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                  lineNumber: 222,
+                  columnNumber: 23
+                }, this),
+                /* @__PURE__ */ jsxDEV("p", { children: formatDateTime(item.arrivalDate) }, void 0, false, {
+                  fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                  lineNumber: 223,
+                  columnNumber: 23
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 221,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV(StatusBadge, { status: item.status }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 225,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 220,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-meta", children: [
+              /* @__PURE__ */ jsxDEV("span", { children: [
+                item.passengers,
+                " passenger(s)"
+              ] }, void 0, true, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 229,
+                columnNumber: 21
+              }, this),
+              isAdmin && item.user ? /* @__PURE__ */ jsxDEV("span", { children: [
+                item.user.fullName,
+                " | ",
+                item.user.email
+              ] }, void 0, true, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 230,
+                columnNumber: 45
+              }, this) : null
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 228,
+              columnNumber: 19
+            }, this),
+            item.notes ? /* @__PURE__ */ jsxDEV("p", { className: "resource-body", children: item.notes }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 233,
+              columnNumber: 33
+            }, this) : null,
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-actions", children: [
+              /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: () => onEdit(item), children: "Edit" }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 236,
+                columnNumber: 21
+              }, this),
+              isAdmin ? /* @__PURE__ */ jsxDEV("label", { className: "compact-field", children: [
+                /* @__PURE__ */ jsxDEV("span", { children: "Status" }, void 0, false, {
+                  fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                  lineNumber: 241,
+                  columnNumber: 25
+                }, this),
+                /* @__PURE__ */ jsxDEV("select", { value: item.status, onChange: (e) => onStatusChange(item._id, e.target.value), children: transferStatuses.map(
+                  (status) => /* @__PURE__ */ jsxDEV("option", { value: status, children: status }, status, false, {
+                    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                    lineNumber: 244,
+                    columnNumber: 21
+                  }, this)
+                ) }, void 0, false, {
+                  fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                  lineNumber: 242,
+                  columnNumber: 25
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 240,
+                columnNumber: 17
+              }, this) : null,
+              /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn danger-btn", onClick: () => onDelete(item._id), children: "Delete" }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+                lineNumber: 251,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+              lineNumber: 235,
+              columnNumber: 19
+            }, this)
+          ] }, item._id, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 219,
+            columnNumber: 13
+          }, this)
+        ) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+          lineNumber: 217,
+          columnNumber: 11
+        }, this) : /* @__PURE__ */ jsxDEV(
+          EmptyState,
+          {
+            title: "No transfer requests yet",
+            description: "Your transfer requests will appear here after you create one."
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+            lineNumber: 259,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+        lineNumber: 206,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+      lineNumber: 145,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx",
+    lineNumber: 129,
+    columnNumber: 5
+  }, this);
+}
+_s(TransfersPage, "Bv9cboE2g2w6VXGYETqA+UdHzGo=", false, function() {
+  return [useAuth];
+});
+_c = TransfersPage;
+var _c;
+$RefreshReg$(_c, "TransfersPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/TransfersPage.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QTtBQUFBO0FBQUE7QUFBQSx5QkFFQTtBQUFBLGdCQUNELEtBTEg7QUFBQTtBQUFBO0FBQUE7QUFBQSx1QkFNQTtBQUFBLG1CQVJGO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBU0EsSUFDRTtBQUFBLGNBQ0osdUJBQUMsWUFBTyxNQUFLLFVBQVMsV0FBVSx3QkFBdUIsU0FBUyxNQUFNTixTQUFTRixLQUFLQyxHQUFHLEdBQUUsc0JBQXpGO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBRUE7QUFBQSxpQkFsQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFtQkE7QUFBQSxlQW5DWUQsS0FBS0MsS0FBbkI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFvQ0E7QUFBQSxRQUNELEtBdkNIO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUF3Q0EsSUFFQTtBQUFBLFVBQUM7QUFBQTtBQUFBLFlBQ0MsT0FBTTtBQUFBLFlBQ04sYUFBWTtBQUFBO0FBQUEsVUFGZDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsUUFFNkU7QUFBQSxXQXZEakY7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQTBEQTtBQUFBLFNBdkhGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0F3SEE7QUFBQSxPQXhJRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBeUlBO0FBRUo7QUFBQzVCLEdBcE91QkQsZUFBYTtBQUFBLFVBQ2xCWCxPQUFPO0FBQUE7QUFBQSxLQURGVztBQUFhLElBQUE2QztBQUFBLGFBQUFBLElBQUEiLCJuYW1lcyI6WyJ1c2VFZmZlY3QiLCJ1c2VTdGF0ZSIsImFwaSIsIkVtcHR5U3RhdGUiLCJMb2FkaW5nU3RhdGUiLCJQYWdlSGVhZGVyIiwiU3RhdHVzQmFkZ2UiLCJ1c2VBdXRoIiwiZ2V0QXBpTWVzc2FnZSIsImZvcm1hdERhdGVUaW1lIiwidG9JbnB1dERhdGVUaW1lIiwiZW1wdHlGb3JtIiwiYWlycG9ydCIsImRlc3RpbmF0aW9uIiwiYXJyaXZhbERhdGUiLCJwYXNzZW5nZXJzIiwibm90ZXMiLCJ0cmFuc2ZlclN0YXR1c2VzIiwiVHJhbnNmZXJzUGFnZSIsIl9zIiwidXNlciIsInRyYW5zZmVycyIsInNldFRyYW5zZmVycyIsImZvcm0iLCJzZXRGb3JtIiwiZWRpdGluZ0lkIiwic2V0RWRpdGluZ0lkIiwibG9hZGluZyIsInNldExvYWRpbmciLCJzdWJtaXR0aW5nIiwic2V0U3VibWl0dGluZyIsImVycm9yIiwic2V0RXJyb3IiLCJpc0FkbWluIiwicm9sZSIsImZldGNoVHJhbnNmZXJzIiwiZGF0YSIsImdldCIsInJlcXVlc3RFcnJvciIsInJlc2V0Rm9ybSIsIm9uU3VibWl0IiwiZSIsInByZXZlbnREZWZhdWx0IiwicHV0IiwicG9zdCIsIm9uRWRpdCIsIml0ZW0iLCJfaWQiLCJvbkRlbGV0ZSIsImlkIiwid2luZG93IiwiY29uZmlybSIsImRlbGV0ZSIsIm9uU3RhdHVzQ2hhbmdlIiwic3RhdHVzIiwicGF0Y2giLCJ0YXJnZXQiLCJ2YWx1ZSIsIk51bWJlciIsImxlbmd0aCIsIm1hcCIsImZ1bGxOYW1lIiwiZW1haWwiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJUcmFuc2ZlcnNQYWdlLmpzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVN0YXRlIH0gZnJvbSAncmVhY3QnO1xuaW1wb3J0IGFwaSBmcm9tICcuLi9hcGkvYXBpLmpzJztcbmltcG9ydCBFbXB0eVN0YXRlIGZyb20gJy4uL2NvbXBvbmVudHMvRW1wdHlTdGF0ZS5qc3gnO1xuaW1wb3J0IExvYWRpbmdTdGF0ZSBmcm9tICcuLi9jb21wb25lbnRzL0xvYWRpbmdTdGF0ZS5qc3gnO1xuaW1wb3J0IFBhZ2VIZWFkZXIgZnJvbSAnLi4vY29tcG9uZW50cy9QYWdlSGVhZGVyLmpzeCc7XG5pbXBvcnQgU3RhdHVzQmFkZ2UgZnJvbSAnLi4vY29tcG9uZW50cy9TdGF0dXNCYWRnZS5qc3gnO1xuaW1wb3J0IHsgdXNlQXV0aCB9IGZyb20gJy4uL2NvbnRleHQvQXV0aENvbnRleHQuanN4JztcbmltcG9ydCB7IGdldEFwaU1lc3NhZ2UgfSBmcm9tICcuLi91dGlscy9odHRwLmpzJztcbmltcG9ydCB7IGZvcm1hdERhdGVUaW1lLCB0b0lucHV0RGF0ZVRpbWUgfSBmcm9tICcuLi91dGlscy9mb3JtYXR0ZXJzLmpzJztcblxuY29uc3QgZW1wdHlGb3JtID0ge1xuICBhaXJwb3J0OiAnJyxcbiAgZGVzdGluYXRpb246ICcnLFxuICBhcnJpdmFsRGF0ZTogJycsXG4gIHBhc3NlbmdlcnM6IDEsXG4gIG5vdGVzOiAnJ1xufTtcblxuY29uc3QgdHJhbnNmZXJTdGF0dXNlcyA9IFsncGVuZGluZycsICdjb25maXJtZWQnLCAnY29tcGxldGVkJywgJ2NhbmNlbGxlZCddO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBUcmFuc2ZlcnNQYWdlKCkge1xuICBjb25zdCB7IHVzZXIgfSA9IHVzZUF1dGgoKTtcbiAgY29uc3QgW3RyYW5zZmVycywgc2V0VHJhbnNmZXJzXSA9IHVzZVN0YXRlKFtdKTtcbiAgY29uc3QgW2Zvcm0sIHNldEZvcm1dID0gdXNlU3RhdGUoZW1wdHlGb3JtKTtcbiAgY29uc3QgW2VkaXRpbmdJZCwgc2V0RWRpdGluZ0lkXSA9IHVzZVN0YXRlKCcnKTtcbiAgY29uc3QgW2xvYWRpbmcsIHNldExvYWRpbmddID0gdXNlU3RhdGUodHJ1ZSk7XG4gIGNvbnN0IFtzdWJtaXR0aW5nLCBzZXRTdWJtaXR0aW5nXSA9IHVzZVN0YXRlKGZhbHNlKTtcbiAgY29uc3QgW2Vycm9yLCBzZXRFcnJvcl0gPSB1c2VTdGF0ZSgnJyk7XG5cbiAgY29uc3QgaXNBZG1pbiA9IHVzZXI/LnJvbGUgPT09ICdhZG1pbic7XG5cbiAgY29uc3QgZmV0Y2hUcmFuc2ZlcnMgPSBhc3luYyAoKSA9PiB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IHsgZGF0YSB9ID0gYXdhaXQgYXBpLmdldCgnL3RyYW5zZmVycycpO1xuICAgICAgc2V0VHJhbnNmZXJzKGRhdGEpO1xuICAgIH0gY2F0Y2ggKHJlcXVlc3RFcnJvcikge1xuICAgICAgc2V0RXJyb3IoZ2V0QXBpTWVzc2FnZShyZXF1ZXN0RXJyb3IsICdUcmFuc2ZlcnMgY291bGQgbm90IGJlIGxvYWRlZC4nKSk7XG4gICAgfSBmaW5hbGx5IHtcbiAgICAgIHNldExvYWRpbmcoZmFsc2UpO1xuICAgIH1cbiAgfTtcblxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGZldGNoVHJhbnNmZXJzKCk7XG4gIH0sIFtdKTtcblxuICBjb25zdCByZXNldEZvcm0gPSAoKSA9PiB7XG4gICAgc2V0Rm9ybShlbXB0eUZvcm0pO1xuICAgIHNldEVkaXRpbmdJZCgnJyk7XG4gIH07XG5cbiAgY29uc3Qgb25TdWJtaXQgPSBhc3luYyAoZSkgPT4ge1xuICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICBzZXRTdWJtaXR0aW5nKHRydWUpO1xuICAgIHNldEVycm9yKCcnKTtcblxuICAgIHRyeSB7XG4gICAgICBpZiAoZWRpdGluZ0lkKSB7XG4gICAgICAgIGF3YWl0IGFwaS5wdXQoYC90cmFuc2ZlcnMvJHtlZGl0aW5nSWR9YCwgZm9ybSk7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICBhd2FpdCBhcGkucG9zdCgnL3RyYW5zZmVycycsIGZvcm0pO1xuICAgICAgfVxuXG4gICAgICByZXNldEZvcm0oKTtcbiAgICAgIGF3YWl0IGZldGNoVHJhbnNmZXJzKCk7XG4gICAgfSBjYXRjaCAocmVxdWVzdEVycm9yKSB7XG4gICAgICBzZXRFcnJvcihnZXRBcGlNZXNzYWdlKHJlcXVlc3RFcnJvciwgJ1RyYW5zZmVyIGNvdWxkIG5vdCBiZSBzYXZlZC4nKSk7XG4gICAgfSBmaW5hbGx5IHtcbiAgICAgIHNldFN1Ym1pdHRpbmcoZmFsc2UpO1xuICAgIH1cbiAgfTtcblxuICBjb25zdCBvbkVkaXQgPSAoaXRlbSkgPT4ge1xuICAgIHNldEVkaXRpbmdJZChpdGVtLl9pZCk7XG4gICAgc2V0Rm9ybSh7XG4gICAgICBhaXJwb3J0OiBpdGVtLmFpcnBvcnQsXG4gICAgICBkZXN0aW5hdGlvbjogaXRlbS5kZXN0aW5hdGlvbixcbiAgICAgIGFycml2YWxEYXRlOiB0b0lucHV0RGF0ZVRpbWUoaXRlbS5hcnJpdmFsRGF0ZSksXG4gICAgICBwYXNzZW5nZXJzOiBpdGVtLnBhc3NlbmdlcnMsXG4gICAgICBub3RlczogaXRlbS5ub3RlcyB8fCAnJ1xuICAgIH0pO1xuICB9O1xuXG4gIGNvbnN0IG9uRGVsZXRlID0gYXN5bmMgKGlkKSA9PiB7XG4gICAgaWYgKCF3aW5kb3cuY29uZmlybSgnRGVsZXRlIHRoaXMgdHJhbnNmZXIgcmVxdWVzdD8nKSkge1xuICAgICAgcmV0dXJuO1xuICAgIH1cblxuICAgIHRyeSB7XG4gICAgICBhd2FpdCBhcGkuZGVsZXRlKGAvdHJhbnNmZXJzLyR7aWR9YCk7XG4gICAgICBpZiAoZWRpdGluZ0lkID09PSBpZCkge1xuICAgICAgICByZXNldEZvcm0oKTtcbiAgICAgIH1cbiAgICAgIGF3YWl0IGZldGNoVHJhbnNmZXJzKCk7XG4gICAgfSBjYXRjaCAocmVxdWVzdEVycm9yKSB7XG4gICAgICBzZXRFcnJvcihnZXRBcGlNZXNzYWdlKHJlcXVlc3RFcnJvciwgJ1RyYW5zZmVyIGNvdWxkIG5vdCBiZSBkZWxldGVkLicpKTtcbiAgICB9XG4gIH07XG5cbiAgY29uc3Qgb25TdGF0dXNDaGFuZ2UgPSBhc3luYyAoaWQsIHN0YXR1cykgPT4ge1xuICAgIHRyeSB7XG4gICAgICBhd2FpdCBhcGkucGF0Y2goYC90cmFuc2ZlcnMvJHtpZH0vc3RhdHVzYCwgeyBzdGF0dXMgfSk7XG4gICAgICBhd2FpdCBmZXRjaFRyYW5zZmVycygpO1xuICAgIH0gY2F0Y2ggKHJlcXVlc3RFcnJvcikge1xuICAgICAgc2V0RXJyb3IoZ2V0QXBpTWVzc2FnZShyZXF1ZXN0RXJyb3IsICdUcmFuc2ZlciBzdGF0dXMgY291bGQgbm90IGJlIHVwZGF0ZWQuJykpO1xuICAgIH1cbiAgfTtcblxuICByZXR1cm4gKFxuICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cInBhZ2Utc2hlbGxcIj5cbiAgICAgIDxQYWdlSGVhZGVyXG4gICAgICAgIGV5ZWJyb3c9XCJBcnJpdmFsIFNlcnZpY2VzXCJcbiAgICAgICAgdGl0bGU9XCJBaXJwb3J0IHRyYW5zZmVyIG1hbmFnZW1lbnRcIlxuICAgICAgICBkZXNjcmlwdGlvbj1cIkJvb2ssIHVwZGF0ZSwgYW5kIHRyYWNrIHlvdXIgYWlycG9ydCB0cmFuc2ZlciByZXF1ZXN0cy5cIlxuICAgICAgICBhY3Rpb25zPXtcbiAgICAgICAgICBlZGl0aW5nSWQgPyAoXG4gICAgICAgICAgICA8YnV0dG9uIHR5cGU9XCJidXR0b25cIiBjbGFzc05hbWU9XCJnaG9zdC1idG5cIiBvbkNsaWNrPXtyZXNldEZvcm19PlxuICAgICAgICAgICAgICBDYW5jZWwgZWRpdGluZ1xuICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgKSA6IG51bGxcbiAgICAgICAgfVxuICAgICAgLz5cblxuICAgICAge2Vycm9yID8gPHAgY2xhc3NOYW1lPVwiZXJyb3ItdGV4dFwiPntlcnJvcn08L3A+IDogbnVsbH1cblxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJ3b3Jrc3BhY2UtZ3JpZFwiPlxuICAgICAgICA8Zm9ybSBvblN1Ym1pdD17b25TdWJtaXR9IGNsYXNzTmFtZT1cInBhbmVsIGZvcm0tZ3JpZCBzdGlja3ktcGFuZWwgcmV2ZWFsXCI+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwYW5lbC1oZWFkaW5nXCI+XG4gICAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJzZWN0aW9uLWtpY2tlclwiPlJlcXVlc3QgRm9ybTwvc3Bhbj5cbiAgICAgICAgICAgICAgPGgzPntlZGl0aW5nSWQgPyAnVXBkYXRlIHRyYW5zZmVyIHJlcXVlc3QnIDogJ0NyZWF0ZSB0cmFuc2ZlciByZXF1ZXN0J308L2gzPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgIDxzcGFuPkFpcnBvcnQ8L3NwYW4+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJWYWNsYXYgSGF2ZWwgQWlycG9ydFwiXG4gICAgICAgICAgICAgIHZhbHVlPXtmb3JtLmFpcnBvcnR9XG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIGFpcnBvcnQ6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgPHNwYW4+RGVzdGluYXRpb248L3NwYW4+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJTdHVkZW50IGRvcm1pdG9yeSBvciBob3RlbFwiXG4gICAgICAgICAgICAgIHZhbHVlPXtmb3JtLmRlc3RpbmF0aW9ufVxuICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm0oeyAuLi5mb3JtLCBkZXN0aW5hdGlvbjogZS50YXJnZXQudmFsdWUgfSl9XG4gICAgICAgICAgICAvPlxuICAgICAgICAgIDwvbGFiZWw+XG4gICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImZpZWxkXCI+XG4gICAgICAgICAgICA8c3Bhbj5BcnJpdmFsIGRhdGUgYW5kIHRpbWU8L3NwYW4+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgdHlwZT1cImRhdGV0aW1lLWxvY2FsXCJcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm0uYXJyaXZhbERhdGV9XG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIGFycml2YWxEYXRlOiBlLnRhcmdldC52YWx1ZSB9KX1cbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgIDxzcGFuPlBhc3NlbmdlcnM8L3NwYW4+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgdHlwZT1cIm51bWJlclwiXG4gICAgICAgICAgICAgIG1pbj1cIjFcIlxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5wYXNzZW5nZXJzfVxuICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm0oeyAuLi5mb3JtLCBwYXNzZW5nZXJzOiBOdW1iZXIoZS50YXJnZXQudmFsdWUpIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgPHNwYW4+Tm90ZXM8L3NwYW4+XG4gICAgICAgICAgICA8dGV4dGFyZWFcbiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJGbGlnaHQgbnVtYmVyLCBhcnJpdmFsIGhhbGwsIGx1Z2dhZ2UgZGV0YWlscywgb3Igc3BlY2lhbCBpbnN0cnVjdGlvbnNcIlxuICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5ub3Rlc31cbiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgbm90ZXM6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgLz5cbiAgICAgICAgICA8L2xhYmVsPlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJidXR0b24tcm93XCI+XG4gICAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cInByaW1hcnktYnRuXCIgZGlzYWJsZWQ9e3N1Ym1pdHRpbmd9PlxuICAgICAgICAgICAgICB7c3VibWl0dGluZyA/ICdTYXZpbmcuLi4nIDogZWRpdGluZ0lkID8gJ1VwZGF0ZSBUcmFuc2ZlcicgOiAnQ3JlYXRlIFRyYW5zZmVyJ31cbiAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuXCIgb25DbGljaz17cmVzZXRGb3JtfT5cbiAgICAgICAgICAgICAgUmVzZXRcbiAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Zvcm0+XG5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwYW5lbCByZXZlYWxcIj5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInBhbmVsLWhlYWRpbmdcIj5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInNlY3Rpb24ta2lja2VyXCI+UmVxdWVzdHM8L3NwYW4+XG4gICAgICAgICAgICAgIDxoMz57aXNBZG1pbiA/ICdBbGwgdHJhbnNmZXIgcmVxdWVzdHMnIDogJ015IHRyYW5zZmVyIHJlcXVlc3RzJ308L2gzPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICB7bG9hZGluZyA/IChcbiAgICAgICAgICAgIDxMb2FkaW5nU3RhdGUgbGFiZWw9XCJMb2FkaW5nIHRyYW5zZmVycy4uLlwiIC8+XG4gICAgICAgICAgKSA6IHRyYW5zZmVycy5sZW5ndGggPyAoXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImxpc3RcIj5cbiAgICAgICAgICAgICAge3RyYW5zZmVycy5tYXAoKGl0ZW0pID0+IChcbiAgICAgICAgICAgICAgICA8YXJ0aWNsZSBrZXk9e2l0ZW0uX2lkfSBjbGFzc05hbWU9XCJyZXNvdXJjZS1jYXJkXCI+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlc291cmNlLXRvcGxpbmVcIj5cbiAgICAgICAgICAgICAgICAgICAgPGRpdj5cbiAgICAgICAgICAgICAgICAgICAgICA8c3Ryb25nPntpdGVtLmFpcnBvcnR9IHRvIHtpdGVtLmRlc3RpbmF0aW9ufTwvc3Ryb25nPlxuICAgICAgICAgICAgICAgICAgICAgIDxwPntmb3JtYXREYXRlVGltZShpdGVtLmFycml2YWxEYXRlKX08L3A+XG4gICAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgICAgICA8U3RhdHVzQmFkZ2Ugc3RhdHVzPXtpdGVtLnN0YXR1c30gLz5cbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlc291cmNlLW1ldGFcIj5cbiAgICAgICAgICAgICAgICAgICAgPHNwYW4+e2l0ZW0ucGFzc2VuZ2Vyc30gcGFzc2VuZ2VyKHMpPC9zcGFuPlxuICAgICAgICAgICAgICAgICAgICB7aXNBZG1pbiAmJiBpdGVtLnVzZXIgPyA8c3Bhbj57aXRlbS51c2VyLmZ1bGxOYW1lfSB8IHtpdGVtLnVzZXIuZW1haWx9PC9zcGFuPiA6IG51bGx9XG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgICAgICAgICAge2l0ZW0ubm90ZXMgPyA8cCBjbGFzc05hbWU9XCJyZXNvdXJjZS1ib2R5XCI+e2l0ZW0ubm90ZXN9PC9wPiA6IG51bGx9XG5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVzb3VyY2UtYWN0aW9uc1wiPlxuICAgICAgICAgICAgICAgICAgICA8YnV0dG9uIHR5cGU9XCJidXR0b25cIiBjbGFzc05hbWU9XCJnaG9zdC1idG5cIiBvbkNsaWNrPXsoKSA9PiBvbkVkaXQoaXRlbSl9PlxuICAgICAgICAgICAgICAgICAgICAgIEVkaXRcbiAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgICAgICAgICAgIHtpc0FkbWluID8gKFxuICAgICAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJjb21wYWN0LWZpZWxkXCI+XG4gICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj5TdGF0dXM8L3NwYW4+XG4gICAgICAgICAgICAgICAgICAgICAgICA8c2VsZWN0IHZhbHVlPXtpdGVtLnN0YXR1c30gb25DaGFuZ2U9eyhlKSA9PiBvblN0YXR1c0NoYW5nZShpdGVtLl9pZCwgZS50YXJnZXQudmFsdWUpfT5cbiAgICAgICAgICAgICAgICAgICAgICAgICAge3RyYW5zZmVyU3RhdHVzZXMubWFwKChzdGF0dXMpID0+IChcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3B0aW9uIGtleT17c3RhdHVzfSB2YWx1ZT17c3RhdHVzfT5cbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHtzdGF0dXN9XG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgICAgICAgICAgICkpfVxuICAgICAgICAgICAgICAgICAgICAgICAgPC9zZWxlY3Q+XG4gICAgICAgICAgICAgICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICAgICAgICAgICAgKSA6IG51bGx9XG4gICAgICAgICAgICAgICAgICAgIDxidXR0b24gdHlwZT1cImJ1dHRvblwiIGNsYXNzTmFtZT1cImdob3N0LWJ0biBkYW5nZXItYnRuXCIgb25DbGljaz17KCkgPT4gb25EZWxldGUoaXRlbS5faWQpfT5cbiAgICAgICAgICAgICAgICAgICAgICBEZWxldGVcbiAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICA8L2FydGljbGU+XG4gICAgICAgICAgICAgICkpfVxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgKSA6IChcbiAgICAgICAgICAgIDxFbXB0eVN0YXRlXG4gICAgICAgICAgICAgIHRpdGxlPVwiTm8gdHJhbnNmZXIgcmVxdWVzdHMgeWV0XCJcbiAgICAgICAgICAgICAgZGVzY3JpcHRpb249XCJZb3VyIHRyYW5zZmVyIHJlcXVlc3RzIHdpbGwgYXBwZWFyIGhlcmUgYWZ0ZXIgeW91IGNyZWF0ZSBvbmUuXCJcbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgKX1cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cbiAgICA8L3NlY3Rpb24+XG4gICk7XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL0hha2FuL0Rlc2t0b3AvY2VudHJhbGNvbm5lY3QvY2xpZW50L3NyYy9wYWdlcy9UcmFuc2ZlcnNQYWdlLmpzeCJ9

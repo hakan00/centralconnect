@@ -1,0 +1,449 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/ToursPage.jsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c1449b3d"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=c1449b3d"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useState = __vite__cjsImport3_react["useState"];
+import api from "/src/api/api.js";
+import EmptyState from "/src/components/EmptyState.jsx";
+import LoadingState from "/src/components/LoadingState.jsx";
+import PageHeader from "/src/components/PageHeader.jsx";
+import { useAuth } from "/src/context/AuthContext.jsx";
+import { getApiMessage } from "/src/utils/http.js";
+import { formatDateTime, formatLabel } from "/src/utils/formatters.js";
+const emptyForm = {
+  title: "",
+  city: "",
+  duration: "",
+  category: "orientation",
+  description: ""
+};
+const tourCategories = ["orientation", "culture", "food", "transport"];
+export default function ToursPage() {
+  _s();
+  const { user } = useAuth();
+  const [tours, setTours] = useState([]);
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const isAdmin = user?.role === "admin";
+  const fetchTours = async () => {
+    try {
+      const { data } = await api.get("/tours");
+      setTours(data);
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Tours could not be loaded."));
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchTours();
+  }, []);
+  const resetForm = () => {
+    setForm(emptyForm);
+    setEditingId("");
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError("");
+    try {
+      if (editingId) {
+        await api.put(`/tours/${editingId}`, form);
+      } else {
+        await api.post("/tours", form);
+      }
+      resetForm();
+      await fetchTours();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Tour could not be saved."));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  const onEdit = (tour) => {
+    setEditingId(tour._id);
+    setForm({
+      title: tour.title,
+      city: tour.city,
+      duration: tour.duration,
+      category: tour.category,
+      description: tour.description
+    });
+  };
+  const onDelete = async (id) => {
+    if (!window.confirm("Delete this tour?")) {
+      return;
+    }
+    try {
+      await api.delete(`/tours/${id}`);
+      if (editingId === id) {
+        resetForm();
+      }
+      await fetchTours();
+    } catch (requestError) {
+      setError(getApiMessage(requestError, "Tour could not be deleted."));
+    }
+  };
+  return /* @__PURE__ */ jsxDEV("section", { className: "page-shell", children: [
+    /* @__PURE__ */ jsxDEV(
+      PageHeader,
+      {
+        eyebrow: "City Guide",
+        title: "Tours and orientation routes",
+        description: "Browse city tours and orientation routes, or manage them if you have permission.",
+        actions: isAdmin && editingId ? /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: resetForm, children: "Cancel editing" }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 126,
+          columnNumber: 9
+        }, this) : null
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+        lineNumber: 120,
+        columnNumber: 7
+      },
+      this
+    ),
+    error ? /* @__PURE__ */ jsxDEV("p", { className: "error-text", children: error }, void 0, false, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+      lineNumber: 133,
+      columnNumber: 16
+    }, this) : null,
+    /* @__PURE__ */ jsxDEV("div", { className: isAdmin ? "workspace-grid tours-admin-grid" : "page-section", children: [
+      isAdmin ? /* @__PURE__ */ jsxDEV("form", { onSubmit, className: "panel form-grid sticky-panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Tour Management" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 140,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: editingId ? "Update tour" : "Create tour" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 141,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 139,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 138,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Title" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 146,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Prague Orientation Walk",
+              value: form.title,
+              onChange: (e) => setForm({ ...form, title: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 147,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 145,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "City" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 154,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "Prague",
+              value: form.city,
+              onChange: (e) => setForm({ ...form, city: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 155,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 153,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Duration" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 162,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              placeholder: "2 hours",
+              value: form.duration,
+              onChange: (e) => setForm({ ...form, duration: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 163,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 161,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Category" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 170,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("select", { value: form.category, onChange: (e) => setForm({ ...form, category: e.target.value }), children: tourCategories.map(
+            (category) => /* @__PURE__ */ jsxDEV("option", { value: category, children: category }, category, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 173,
+              columnNumber: 15
+            }, this)
+          ) }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 171,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 169,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "field", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Description" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 180,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "textarea",
+            {
+              placeholder: "Describe the route, audience, and practical value",
+              value: form.description,
+              onChange: (e) => setForm({ ...form, description: e.target.value })
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 181,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 179,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "button-row", children: [
+          /* @__PURE__ */ jsxDEV("button", { className: "primary-btn", disabled: submitting, children: submitting ? "Saving..." : editingId ? "Update Tour" : "Create Tour" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 189,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: resetForm, children: "Reset" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 192,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 188,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+        lineNumber: 137,
+        columnNumber: 9
+      }, this) : null,
+      /* @__PURE__ */ jsxDEV("div", { className: "panel reveal", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "panel-heading", children: /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "section-kicker", children: "Tours" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 202,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("h3", { children: "Published tours" }, void 0, false, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 203,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 201,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 200,
+          columnNumber: 11
+        }, this),
+        loading ? /* @__PURE__ */ jsxDEV(LoadingState, { label: "Loading tours..." }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 208,
+          columnNumber: 11
+        }, this) : tours.length ? /* @__PURE__ */ jsxDEV("div", { className: "tour-grid", children: tours.map(
+          (tour) => /* @__PURE__ */ jsxDEV("article", { className: "tour-card", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-topline", children: [
+              /* @__PURE__ */ jsxDEV("span", { className: "tag-chip", children: formatLabel(tour.category) }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+                lineNumber: 214,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("small", { children: formatDateTime(tour.updatedAt) }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+                lineNumber: 215,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 213,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("h3", { children: tour.title }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 217,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: tour.description }, void 0, false, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 218,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "resource-meta", children: [
+              /* @__PURE__ */ jsxDEV("span", { children: tour.city }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+                lineNumber: 220,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { children: tour.duration }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+                lineNumber: 221,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 219,
+              columnNumber: 19
+            }, this),
+            isAdmin ? /* @__PURE__ */ jsxDEV("div", { className: "resource-actions", children: [
+              /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn", onClick: () => onEdit(tour), children: "Edit" }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+                lineNumber: 225,
+                columnNumber: 23
+              }, this),
+              /* @__PURE__ */ jsxDEV("button", { type: "button", className: "ghost-btn danger-btn", onClick: () => onDelete(tour._id), children: "Delete" }, void 0, false, {
+                fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+                lineNumber: 228,
+                columnNumber: 23
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+              lineNumber: 224,
+              columnNumber: 15
+            }, this) : null
+          ] }, tour._id, true, {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 212,
+            columnNumber: 13
+          }, this)
+        ) }, void 0, false, {
+          fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+          lineNumber: 210,
+          columnNumber: 11
+        }, this) : /* @__PURE__ */ jsxDEV(
+          EmptyState,
+          {
+            title: "No tours available",
+            description: "Tours will appear here when they are added."
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+            lineNumber: 237,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+        lineNumber: 199,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+      lineNumber: 135,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx",
+    lineNumber: 119,
+    columnNumber: 5
+  }, this);
+}
+_s(ToursPage, "P8Hwp/4TBRaUmCXxYXawISIfQQ0=", false, function() {
+  return [useAuth];
+});
+_c = ToursPage;
+var _c;
+$RefreshReg$(_c, "ToursPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/Hakan/Desktop/centralconnect/client/src/pages/ToursPage.jsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LFlBQVo7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBcUI7QUFBQSxpQkFGdkI7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFHQTtBQUFBLFlBQ0NtQixVQUNDLHVCQUFDLFNBQUksV0FBVSxvQkFDYjtBQUFBLHFDQUFDLFlBQU8sTUFBSyxVQUFTLFdBQVUsYUFBWSxTQUFTLE1BQU1ZLE9BQU9DLElBQUksR0FBRSxvQkFBeEU7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFFQTtBQUFBLGNBQ0EsdUJBQUMsWUFBTyxNQUFLLFVBQVMsV0FBVSx3QkFBdUIsU0FBUyxNQUFNRSxTQUFTRixLQUFLQyxHQUFHLEdBQUUsc0JBQXpGO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBRUE7QUFBQSxpQkFORjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQU9BLElBQ0U7QUFBQSxlQXBCOEJELEtBQUtDLEtBQXpDO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBcUJBO0FBQUEsUUFDRCxLQXhCSDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBeUJBLElBRUE7QUFBQSxVQUFDO0FBQUE7QUFBQSxZQUNDLE9BQU07QUFBQSxZQUNOLGFBQVk7QUFBQTtBQUFBLFVBRmQ7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLFFBRTJEO0FBQUEsV0F4Qy9EO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUEyQ0E7QUFBQSxTQTNHRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBNEdBO0FBQUEsT0E1SEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQTZIQTtBQUVKO0FBQUM1QixHQS9NdUJELFdBQVM7QUFBQSxVQUNkWCxPQUFPO0FBQUE7QUFBQSxLQURGVztBQUFTLElBQUF3QztBQUFBLGFBQUFBLElBQUEiLCJuYW1lcyI6WyJ1c2VFZmZlY3QiLCJ1c2VTdGF0ZSIsImFwaSIsIkVtcHR5U3RhdGUiLCJMb2FkaW5nU3RhdGUiLCJQYWdlSGVhZGVyIiwidXNlQXV0aCIsImdldEFwaU1lc3NhZ2UiLCJmb3JtYXREYXRlVGltZSIsImZvcm1hdExhYmVsIiwiZW1wdHlGb3JtIiwidGl0bGUiLCJjaXR5IiwiZHVyYXRpb24iLCJjYXRlZ29yeSIsImRlc2NyaXB0aW9uIiwidG91ckNhdGVnb3JpZXMiLCJUb3Vyc1BhZ2UiLCJfcyIsInVzZXIiLCJ0b3VycyIsInNldFRvdXJzIiwiZm9ybSIsInNldEZvcm0iLCJlZGl0aW5nSWQiLCJzZXRFZGl0aW5nSWQiLCJsb2FkaW5nIiwic2V0TG9hZGluZyIsInN1Ym1pdHRpbmciLCJzZXRTdWJtaXR0aW5nIiwiZXJyb3IiLCJzZXRFcnJvciIsImlzQWRtaW4iLCJyb2xlIiwiZmV0Y2hUb3VycyIsImRhdGEiLCJnZXQiLCJyZXF1ZXN0RXJyb3IiLCJyZXNldEZvcm0iLCJvblN1Ym1pdCIsImUiLCJwcmV2ZW50RGVmYXVsdCIsInB1dCIsInBvc3QiLCJvbkVkaXQiLCJ0b3VyIiwiX2lkIiwib25EZWxldGUiLCJpZCIsIndpbmRvdyIsImNvbmZpcm0iLCJkZWxldGUiLCJ0YXJnZXQiLCJ2YWx1ZSIsIm1hcCIsImxlbmd0aCIsInVwZGF0ZWRBdCIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIlRvdXJzUGFnZS5qc3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlRWZmZWN0LCB1c2VTdGF0ZSB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBhcGkgZnJvbSAnLi4vYXBpL2FwaS5qcyc7XG5pbXBvcnQgRW1wdHlTdGF0ZSBmcm9tICcuLi9jb21wb25lbnRzL0VtcHR5U3RhdGUuanN4JztcbmltcG9ydCBMb2FkaW5nU3RhdGUgZnJvbSAnLi4vY29tcG9uZW50cy9Mb2FkaW5nU3RhdGUuanN4JztcbmltcG9ydCBQYWdlSGVhZGVyIGZyb20gJy4uL2NvbXBvbmVudHMvUGFnZUhlYWRlci5qc3gnO1xuaW1wb3J0IHsgdXNlQXV0aCB9IGZyb20gJy4uL2NvbnRleHQvQXV0aENvbnRleHQuanN4JztcbmltcG9ydCB7IGdldEFwaU1lc3NhZ2UgfSBmcm9tICcuLi91dGlscy9odHRwLmpzJztcbmltcG9ydCB7IGZvcm1hdERhdGVUaW1lLCBmb3JtYXRMYWJlbCB9IGZyb20gJy4uL3V0aWxzL2Zvcm1hdHRlcnMuanMnO1xuXG5jb25zdCBlbXB0eUZvcm0gPSB7XG4gIHRpdGxlOiAnJyxcbiAgY2l0eTogJycsXG4gIGR1cmF0aW9uOiAnJyxcbiAgY2F0ZWdvcnk6ICdvcmllbnRhdGlvbicsXG4gIGRlc2NyaXB0aW9uOiAnJ1xufTtcblxuY29uc3QgdG91ckNhdGVnb3JpZXMgPSBbJ29yaWVudGF0aW9uJywgJ2N1bHR1cmUnLCAnZm9vZCcsICd0cmFuc3BvcnQnXTtcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gVG91cnNQYWdlKCkge1xuICBjb25zdCB7IHVzZXIgfSA9IHVzZUF1dGgoKTtcbiAgY29uc3QgW3RvdXJzLCBzZXRUb3Vyc10gPSB1c2VTdGF0ZShbXSk7XG4gIGNvbnN0IFtmb3JtLCBzZXRGb3JtXSA9IHVzZVN0YXRlKGVtcHR5Rm9ybSk7XG4gIGNvbnN0IFtlZGl0aW5nSWQsIHNldEVkaXRpbmdJZF0gPSB1c2VTdGF0ZSgnJyk7XG4gIGNvbnN0IFtsb2FkaW5nLCBzZXRMb2FkaW5nXSA9IHVzZVN0YXRlKHRydWUpO1xuICBjb25zdCBbc3VibWl0dGluZywgc2V0U3VibWl0dGluZ10gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IFtlcnJvciwgc2V0RXJyb3JdID0gdXNlU3RhdGUoJycpO1xuXG4gIGNvbnN0IGlzQWRtaW4gPSB1c2VyPy5yb2xlID09PSAnYWRtaW4nO1xuXG4gIGNvbnN0IGZldGNoVG91cnMgPSBhc3luYyAoKSA9PiB7XG4gICAgdHJ5IHtcbiAgICAgIGNvbnN0IHsgZGF0YSB9ID0gYXdhaXQgYXBpLmdldCgnL3RvdXJzJyk7XG4gICAgICBzZXRUb3VycyhkYXRhKTtcbiAgICB9IGNhdGNoIChyZXF1ZXN0RXJyb3IpIHtcbiAgICAgIHNldEVycm9yKGdldEFwaU1lc3NhZ2UocmVxdWVzdEVycm9yLCAnVG91cnMgY291bGQgbm90IGJlIGxvYWRlZC4nKSk7XG4gICAgfSBmaW5hbGx5IHtcbiAgICAgIHNldExvYWRpbmcoZmFsc2UpO1xuICAgIH1cbiAgfTtcblxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGZldGNoVG91cnMoKTtcbiAgfSwgW10pO1xuXG4gIGNvbnN0IHJlc2V0Rm9ybSA9ICgpID0+IHtcbiAgICBzZXRGb3JtKGVtcHR5Rm9ybSk7XG4gICAgc2V0RWRpdGluZ0lkKCcnKTtcbiAgfTtcblxuICBjb25zdCBvblN1Ym1pdCA9IGFzeW5jIChlKSA9PiB7XG4gICAgZS5wcmV2ZW50RGVmYXVsdCgpO1xuICAgIHNldFN1Ym1pdHRpbmcodHJ1ZSk7XG4gICAgc2V0RXJyb3IoJycpO1xuXG4gICAgdHJ5IHtcbiAgICAgIGlmIChlZGl0aW5nSWQpIHtcbiAgICAgICAgYXdhaXQgYXBpLnB1dChgL3RvdXJzLyR7ZWRpdGluZ0lkfWAsIGZvcm0pO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgYXdhaXQgYXBpLnBvc3QoJy90b3VycycsIGZvcm0pO1xuICAgICAgfVxuXG4gICAgICByZXNldEZvcm0oKTtcbiAgICAgIGF3YWl0IGZldGNoVG91cnMoKTtcbiAgICB9IGNhdGNoIChyZXF1ZXN0RXJyb3IpIHtcbiAgICAgIHNldEVycm9yKGdldEFwaU1lc3NhZ2UocmVxdWVzdEVycm9yLCAnVG91ciBjb3VsZCBub3QgYmUgc2F2ZWQuJykpO1xuICAgIH0gZmluYWxseSB7XG4gICAgICBzZXRTdWJtaXR0aW5nKGZhbHNlKTtcbiAgICB9XG4gIH07XG5cbiAgY29uc3Qgb25FZGl0ID0gKHRvdXIpID0+IHtcbiAgICBzZXRFZGl0aW5nSWQodG91ci5faWQpO1xuICAgIHNldEZvcm0oe1xuICAgICAgdGl0bGU6IHRvdXIudGl0bGUsXG4gICAgICBjaXR5OiB0b3VyLmNpdHksXG4gICAgICBkdXJhdGlvbjogdG91ci5kdXJhdGlvbixcbiAgICAgIGNhdGVnb3J5OiB0b3VyLmNhdGVnb3J5LFxuICAgICAgZGVzY3JpcHRpb246IHRvdXIuZGVzY3JpcHRpb25cbiAgICB9KTtcbiAgfTtcblxuICBjb25zdCBvbkRlbGV0ZSA9IGFzeW5jIChpZCkgPT4ge1xuICAgIGlmICghd2luZG93LmNvbmZpcm0oJ0RlbGV0ZSB0aGlzIHRvdXI/JykpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG5cbiAgICB0cnkge1xuICAgICAgYXdhaXQgYXBpLmRlbGV0ZShgL3RvdXJzLyR7aWR9YCk7XG4gICAgICBpZiAoZWRpdGluZ0lkID09PSBpZCkge1xuICAgICAgICByZXNldEZvcm0oKTtcbiAgICAgIH1cbiAgICAgIGF3YWl0IGZldGNoVG91cnMoKTtcbiAgICB9IGNhdGNoIChyZXF1ZXN0RXJyb3IpIHtcbiAgICAgIHNldEVycm9yKGdldEFwaU1lc3NhZ2UocmVxdWVzdEVycm9yLCAnVG91ciBjb3VsZCBub3QgYmUgZGVsZXRlZC4nKSk7XG4gICAgfVxuICB9O1xuXG4gIHJldHVybiAoXG4gICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwicGFnZS1zaGVsbFwiPlxuICAgICAgPFBhZ2VIZWFkZXJcbiAgICAgICAgZXllYnJvdz1cIkNpdHkgR3VpZGVcIlxuICAgICAgICB0aXRsZT1cIlRvdXJzIGFuZCBvcmllbnRhdGlvbiByb3V0ZXNcIlxuICAgICAgICBkZXNjcmlwdGlvbj1cIkJyb3dzZSBjaXR5IHRvdXJzIGFuZCBvcmllbnRhdGlvbiByb3V0ZXMsIG9yIG1hbmFnZSB0aGVtIGlmIHlvdSBoYXZlIHBlcm1pc3Npb24uXCJcbiAgICAgICAgYWN0aW9ucz17XG4gICAgICAgICAgaXNBZG1pbiAmJiBlZGl0aW5nSWQgPyAoXG4gICAgICAgICAgICA8YnV0dG9uIHR5cGU9XCJidXR0b25cIiBjbGFzc05hbWU9XCJnaG9zdC1idG5cIiBvbkNsaWNrPXtyZXNldEZvcm19PlxuICAgICAgICAgICAgICBDYW5jZWwgZWRpdGluZ1xuICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgKSA6IG51bGxcbiAgICAgICAgfVxuICAgICAgLz5cblxuICAgICAge2Vycm9yID8gPHAgY2xhc3NOYW1lPVwiZXJyb3ItdGV4dFwiPntlcnJvcn08L3A+IDogbnVsbH1cblxuICAgICAgPGRpdiBjbGFzc05hbWU9e2lzQWRtaW4gPyAnd29ya3NwYWNlLWdyaWQgdG91cnMtYWRtaW4tZ3JpZCcgOiAncGFnZS1zZWN0aW9uJ30+XG4gICAgICAgIHtpc0FkbWluID8gKFxuICAgICAgICAgIDxmb3JtIG9uU3VibWl0PXtvblN1Ym1pdH0gY2xhc3NOYW1lPVwicGFuZWwgZm9ybS1ncmlkIHN0aWNreS1wYW5lbCByZXZlYWxcIj5cbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicGFuZWwtaGVhZGluZ1wiPlxuICAgICAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInNlY3Rpb24ta2lja2VyXCI+VG91ciBNYW5hZ2VtZW50PC9zcGFuPlxuICAgICAgICAgICAgICAgIDxoMz57ZWRpdGluZ0lkID8gJ1VwZGF0ZSB0b3VyJyA6ICdDcmVhdGUgdG91cid9PC9oMz5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImZpZWxkXCI+XG4gICAgICAgICAgICAgIDxzcGFuPlRpdGxlPC9zcGFuPlxuICAgICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIlByYWd1ZSBPcmllbnRhdGlvbiBXYWxrXCJcbiAgICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS50aXRsZX1cbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm0oeyAuLi5mb3JtLCB0aXRsZTogZS50YXJnZXQudmFsdWUgfSl9XG4gICAgICAgICAgICAgIC8+XG4gICAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImZpZWxkXCI+XG4gICAgICAgICAgICAgIDxzcGFuPkNpdHk8L3NwYW4+XG4gICAgICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiUHJhZ3VlXCJcbiAgICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5jaXR5fVxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIGNpdHk6IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgICAvPlxuICAgICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJmaWVsZFwiPlxuICAgICAgICAgICAgICA8c3Bhbj5EdXJhdGlvbjwvc3Bhbj5cbiAgICAgICAgICAgICAgPGlucHV0XG4gICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCIyIGhvdXJzXCJcbiAgICAgICAgICAgICAgICB2YWx1ZT17Zm9ybS5kdXJhdGlvbn1cbiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm0oeyAuLi5mb3JtLCBkdXJhdGlvbjogZS50YXJnZXQudmFsdWUgfSl9XG4gICAgICAgICAgICAgIC8+XG4gICAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImZpZWxkXCI+XG4gICAgICAgICAgICAgIDxzcGFuPkNhdGVnb3J5PC9zcGFuPlxuICAgICAgICAgICAgICA8c2VsZWN0IHZhbHVlPXtmb3JtLmNhdGVnb3J5fSBvbkNoYW5nZT17KGUpID0+IHNldEZvcm0oeyAuLi5mb3JtLCBjYXRlZ29yeTogZS50YXJnZXQudmFsdWUgfSl9PlxuICAgICAgICAgICAgICAgIHt0b3VyQ2F0ZWdvcmllcy5tYXAoKGNhdGVnb3J5KSA9PiAoXG4gICAgICAgICAgICAgICAgICA8b3B0aW9uIGtleT17Y2F0ZWdvcnl9IHZhbHVlPXtjYXRlZ29yeX0+XG4gICAgICAgICAgICAgICAgICAgIHtjYXRlZ29yeX1cbiAgICAgICAgICAgICAgICAgIDwvb3B0aW9uPlxuICAgICAgICAgICAgICAgICkpfVxuICAgICAgICAgICAgICA8L3NlbGVjdD5cbiAgICAgICAgICAgIDwvbGFiZWw+XG4gICAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPVwiZmllbGRcIj5cbiAgICAgICAgICAgICAgPHNwYW4+RGVzY3JpcHRpb248L3NwYW4+XG4gICAgICAgICAgICAgIDx0ZXh0YXJlYVxuICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRGVzY3JpYmUgdGhlIHJvdXRlLCBhdWRpZW5jZSwgYW5kIHByYWN0aWNhbCB2YWx1ZVwiXG4gICAgICAgICAgICAgICAgdmFsdWU9e2Zvcm0uZGVzY3JpcHRpb259XG4gICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgZGVzY3JpcHRpb246IGUudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgICAvPlxuICAgICAgICAgICAgPC9sYWJlbD5cblxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJidXR0b24tcm93XCI+XG4gICAgICAgICAgICAgIDxidXR0b24gY2xhc3NOYW1lPVwicHJpbWFyeS1idG5cIiBkaXNhYmxlZD17c3VibWl0dGluZ30+XG4gICAgICAgICAgICAgICAge3N1Ym1pdHRpbmcgPyAnU2F2aW5nLi4uJyA6IGVkaXRpbmdJZCA/ICdVcGRhdGUgVG91cicgOiAnQ3JlYXRlIFRvdXInfVxuICAgICAgICAgICAgICA8L2J1dHRvbj5cbiAgICAgICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuXCIgb25DbGljaz17cmVzZXRGb3JtfT5cbiAgICAgICAgICAgICAgICBSZXNldFxuICAgICAgICAgICAgICA8L2J1dHRvbj5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvZm9ybT5cbiAgICAgICAgKSA6IG51bGx9XG5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwYW5lbCByZXZlYWxcIj5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInBhbmVsLWhlYWRpbmdcIj5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInNlY3Rpb24ta2lja2VyXCI+VG91cnM8L3NwYW4+XG4gICAgICAgICAgICAgIDxoMz5QdWJsaXNoZWQgdG91cnM8L2gzPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICB7bG9hZGluZyA/IChcbiAgICAgICAgICAgIDxMb2FkaW5nU3RhdGUgbGFiZWw9XCJMb2FkaW5nIHRvdXJzLi4uXCIgLz5cbiAgICAgICAgICApIDogdG91cnMubGVuZ3RoID8gKFxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0b3VyLWdyaWRcIj5cbiAgICAgICAgICAgICAge3RvdXJzLm1hcCgodG91cikgPT4gKFxuICAgICAgICAgICAgICAgIDxhcnRpY2xlIGNsYXNzTmFtZT1cInRvdXItY2FyZFwiIGtleT17dG91ci5faWR9PlxuICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJyZXNvdXJjZS10b3BsaW5lXCI+XG4gICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRhZy1jaGlwXCI+e2Zvcm1hdExhYmVsKHRvdXIuY2F0ZWdvcnkpfTwvc3Bhbj5cbiAgICAgICAgICAgICAgICAgICAgPHNtYWxsPntmb3JtYXREYXRlVGltZSh0b3VyLnVwZGF0ZWRBdCl9PC9zbWFsbD5cbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgICAgPGgzPnt0b3VyLnRpdGxlfTwvaDM+XG4gICAgICAgICAgICAgICAgICA8cD57dG91ci5kZXNjcmlwdGlvbn08L3A+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlc291cmNlLW1ldGFcIj5cbiAgICAgICAgICAgICAgICAgICAgPHNwYW4+e3RvdXIuY2l0eX08L3NwYW4+XG4gICAgICAgICAgICAgICAgICAgIDxzcGFuPnt0b3VyLmR1cmF0aW9ufTwvc3Bhbj5cbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgICAge2lzQWRtaW4gPyAoXG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVzb3VyY2UtYWN0aW9uc1wiPlxuICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24gdHlwZT1cImJ1dHRvblwiIGNsYXNzTmFtZT1cImdob3N0LWJ0blwiIG9uQ2xpY2s9eygpID0+IG9uRWRpdCh0b3VyKX0+XG4gICAgICAgICAgICAgICAgICAgICAgICBFZGl0XG4gICAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgY2xhc3NOYW1lPVwiZ2hvc3QtYnRuIGRhbmdlci1idG5cIiBvbkNsaWNrPXsoKSA9PiBvbkRlbGV0ZSh0b3VyLl9pZCl9PlxuICAgICAgICAgICAgICAgICAgICAgICAgRGVsZXRlXG4gICAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgICAgKSA6IG51bGx9XG4gICAgICAgICAgICAgICAgPC9hcnRpY2xlPlxuICAgICAgICAgICAgICApKX1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICA8RW1wdHlTdGF0ZVxuICAgICAgICAgICAgICB0aXRsZT1cIk5vIHRvdXJzIGF2YWlsYWJsZVwiXG4gICAgICAgICAgICAgIGRlc2NyaXB0aW9uPVwiVG91cnMgd2lsbCBhcHBlYXIgaGVyZSB3aGVuIHRoZXkgYXJlIGFkZGVkLlwiXG4gICAgICAgICAgICAvPlxuICAgICAgICAgICl9XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9kaXY+XG4gICAgPC9zZWN0aW9uPlxuICApO1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy9IYWthbi9EZXNrdG9wL2NlbnRyYWxjb25uZWN0L2NsaWVudC9zcmMvcGFnZXMvVG91cnNQYWdlLmpzeCJ9
