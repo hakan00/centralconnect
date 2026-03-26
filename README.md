@@ -1,4 +1,4 @@
-# CentralConnect - MERN Thesis Project
+# CentralConnect - MERN  Project
 
 CentralConnect is a MERN-stack web platform prototype inspired by the thesis **"Design and Implementation of a Centralized Web-Based Service Platform for International Integration and Digital Guidance"**.
 
@@ -76,7 +76,7 @@ CLIENT_URL=http://localhost:5173
 - `POST /api/community`
 - `GET /api/community`
 
-## Thesis Alignment
+## Alignment
 
 This prototype directly maps to the thesis objectives:
 
@@ -85,7 +85,3 @@ This prototype directly maps to the thesis objectives:
 - **Educational and Social Integration Module**
 - **Digital Tourist Guide**
 
-## Notes
-
-- This is a strong academic prototype and clean starter architecture.
-- For production, add validation libraries, rate limiting, i18n, test coverage, file upload storage, and external integrations.
